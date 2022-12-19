@@ -162,6 +162,20 @@
     <None Include="..\.gitignore" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ALU\ALU_1bit.h" />
+    <ClInclude Include="src\components\Decoder2_to_4.h" />
+    <ClInclude Include="src\components\Full_Adder.h" />
+    <ClInclude Include="src\components\Half_Adder.h" />
+    <ClInclude Include="src\ALU\ALU_LogicUnit.h" />
+    <ClInclude Include="src\Component.h" />
+    <ClInclude Include="src\gates\AND_Gate.h" />
+    <ClInclude Include="src\gates\Gates.h" />
+    <ClInclude Include="src\gates\NOT_Gate.h" />
+    <ClInclude Include="src\gates\OR_Gate.h" />
+    <ClInclude Include="src\gates\XOR_Gate.h" />
+    <ClInclude Include="src\gates\XOR_Gate_4IN.h" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

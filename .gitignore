@@ -10,6 +10,34 @@
 # Visual Studio cache/options:
 .vs/
 
+# Google Tests packages:
+packages
+
+# Ignore CI build directory
+build/
+xcuserdata
+cmake-build-debug/
+.idea/
+bazel-bin
+bazel-genfiles
+bazel-googletest
+bazel-out
+bazel-testlogs
+*.pyc
+
+# Visual Studio files
+.vs
+*.sdf
+*.opensdf
+*.VC.opendb
+*.suo
+*.user
+_ReSharper.Caches/
+Win32-Debug/
+Win32-Release/
+x64-Debug/
+x64-Release/
+
 # User-specific files
 *.rsuser
 *.suo
@@ -20,6 +48,10 @@
 # Binaries:
 [Ii]ntermediate
 [Bb]in
+[xX]64
+[xX]86
+[Dd]ebug
+[Rr]elease
 
 # Precompiled Headers
 *.gch
