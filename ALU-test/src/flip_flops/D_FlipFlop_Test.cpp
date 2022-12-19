@@ -13,18 +13,18 @@ public:
 
 TEST_F(D_FlipFlop_Test, D_FlipFlop_Test_Latching)
 {
-	dFlipFlop.setClock(true);
-	dFlipFlop.setD(false);
+	dFlipFlop.setClock(ON);
+	dFlipFlop.setD(OFF);
 	dFlipFlop.process();
-	EXPECT_EQ(dFlipFlop.getQ(), 0); EXPECT_EQ(dFlipFlop.getQ_INV(), 1);
+	EXPECT_EQ(dFlipFlop.getQ(), OFF); EXPECT_EQ(dFlipFlop.getQ_INV(), ON);
 	
-	dFlipFlop.setClock(false);
-	dFlipFlop.setD(true);
+	dFlipFlop.setClock(OFF);
+	dFlipFlop.setD(ON);
 	dFlipFlop.process();
-	EXPECT_EQ(dFlipFlop.getQ(), 0); EXPECT_EQ(dFlipFlop.getQ_INV(), 1);
+	EXPECT_EQ(dFlipFlop.getQ(), OFF); EXPECT_EQ(dFlipFlop.getQ_INV(), ON);
 
-	dFlipFlop.setClock(true);
-	dFlipFlop.setD(true);
+	dFlipFlop.setClock(ON);
+	dFlipFlop.setD(ON);
 	dFlipFlop.process();
-	EXPECT_EQ(dFlipFlop.getQ(), 1); EXPECT_EQ(dFlipFlop.getQ_INV(), 0);
+	EXPECT_EQ(dFlipFlop.getQ(), ON); EXPECT_EQ(dFlipFlop.getQ_INV(), OFF);
 }

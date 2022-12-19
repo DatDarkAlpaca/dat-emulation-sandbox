@@ -14,25 +14,25 @@ namespace dat
 		}
 
 	public:
-		bool getF0() const { return (*this)[16 + 0]; }
+		State getF0() const { return (*this)[16 + 0]; }
 
-		void setF0(bool value) { (*this)[16 + 0] = value; }
+		void setF0(State value) { (*this)[16 + 0] = value; }
 		
-		bool getF1() const { return (*this)[16 + 1];}
+		State getF1() const { return (*this)[16 + 1];}
 
-		void setF1(bool value) { (*this)[16 + 1] = value; }
+		void setF1(State value) { (*this)[16 + 1] = value; }
 
-		bool getCarryIn() { return (*this)[16 + 2]; }
+		State getCarryIn() { return (*this)[16 + 2]; }
 
-		void setCarryIn(bool value) { (*this)[16 + 2] = value; }
-
-	public:
-		bool getCarryOut() { return output(8); }
-
-		void setCarryOut(bool value) { return setOutput(8, value); }
+		void setCarryIn(State value) { (*this)[16 + 2] = value; }
 
 	public:
-		void setBitA(size_t index, bool value)
+		State getCarryOut() { return output(8); }
+
+		void setCarryOut(State value) { return setOutput(8, value); }
+
+	public:
+		void setBitA(size_t index, State value)
 		{
 			if (index >= 8)
 				throw "Invalid ALU A bit.";
@@ -40,7 +40,7 @@ namespace dat
 			(*this)[index] = value;
 		}
 
-		void setBitB(size_t index, bool value)
+		void setBitB(size_t index, State value)
 		{
 			if (index >= 8)
 				throw "Invalid ALU B bit.";
@@ -48,7 +48,7 @@ namespace dat
 			(*this)[index + 8] = value;
 		}
 
-		bool getBitA(size_t index) const
+		State getBitA(size_t index) const
 		{
 			if (index >= 8)
 				throw "Invalid ALU A bit.";
@@ -56,7 +56,7 @@ namespace dat
 			return (*this)[index];
 		}
 
-		bool getBitB(size_t index) const
+		State getBitB(size_t index) const
 		{
 			if (index >= 8)
 				throw "Invalid ALU B bit.";
@@ -92,13 +92,19 @@ namespace dat
 		void setNumericA(uint8_t number)
 		{
 			for (size_t i = 0; i < 8; ++i)
-				setBitA(i, ((number & (1 << i)) >> i));
+			{
+				int bit = ((number & (1 << i)) >> i);
+				setBitA(i, fromBool(bit));
+			}
 		}
 
 		void setNumericB(uint8_t number)
 		{
 			for (size_t i = 0; i < 8; ++i)
-				setBitB(i, ((number & (1 << i)) >> i));
+			{
+				int bit = ((number & (1 << i)) >> i);
+				setBitB(i, fromBool(bit));
+			}
 		}
 
 		uint8_t getNumeric() const

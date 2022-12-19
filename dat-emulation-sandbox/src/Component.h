@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include "State.h"
 
 namespace dat
 {
@@ -10,31 +11,31 @@ namespace dat
 		Component()
 		{
 			for (size_t i = 0; i < InputAmount; i++)
-				m_Inputs[i] = false;
+				m_Inputs[i] = ZERO;
 
 			for (size_t i = 0; i < OutputAmount; i++)
-				m_Outputs[i] = false;
+				m_Outputs[i] = ZERO;
 		}
 
 		virtual ~Component() = default;
 
 	public:
-		bool operator[](size_t pinIndex) const
+		State operator[](size_t pinIndex) const
 		{
 			return m_Inputs[pinIndex];
 		}
 
-		bool& operator[](size_t pinIndex)
+		State& operator[](size_t pinIndex)
 		{
 			return m_Inputs[pinIndex];
 		}
 
-		void setOutput(size_t pinIndex = 0, bool value = 0)
+		void setOutput(size_t pinIndex = 0, State value = 0)
 		{
 			m_Outputs[pinIndex] = value;
 		}
 
-		bool output(size_t pinIndex = 0) const
+		State output(size_t pinIndex = 0) const
 		{
 			return m_Outputs[pinIndex];
 		}
@@ -43,7 +44,7 @@ namespace dat
 		virtual void process() { }
 
 	private:
-		std::array<bool, InputAmount> m_Inputs;
-		std::array<bool, OutputAmount> m_Outputs;
+		std::array<State, InputAmount> m_Inputs;
+		std::array<State, OutputAmount> m_Outputs;
 	};
 }

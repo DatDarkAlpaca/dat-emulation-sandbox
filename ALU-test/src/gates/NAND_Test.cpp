@@ -13,32 +13,32 @@ public:
 
 TEST_F(Gate_NAND_Test, Gate_NAND_Test_0_0)
 {
-	nandGate[0] = 0; nandGate[1] = 0;
+	nandGate[0] = OFF; nandGate[1] = OFF;
 	nandGate.process();
 
-	EXPECT_EQ(nandGate.output(), 1);
+	EXPECT_EQ(nandGate.output(), ON);
 }
 
 TEST_F(Gate_NAND_Test, Gate_NAND_Test_0_1)
 {
-	nandGate[0] = 0; nandGate[1] = 1;
+	nandGate[0] = OFF; nandGate[1] = ON;
 	nandGate.process();
 
-	EXPECT_EQ(nandGate.output(), 1);
+	EXPECT_EQ(nandGate.output(), ON);
 }
 
 TEST_F(Gate_NAND_Test, Gate_NAND_Test_0_2)
 {
-	nandGate[0] = 1; nandGate[1] = 0;
+	nandGate[0] = ON; nandGate[1] = OFF;
 	nandGate.process();
 
-	EXPECT_EQ(nandGate.output(), 1);
+	EXPECT_EQ(nandGate.output(), ON);
 }
 
 TEST_F(Gate_NAND_Test, Gate_NAND_Test_0_3)
 {
-	nandGate[0] = 1; nandGate[1] = 1;
+	nandGate[0] = ON; nandGate[1] = ON;
 	nandGate.process();
 
-	EXPECT_EQ(nandGate.output(), 0);
+	EXPECT_EQ(nandGate.output(), OFF);
 }

@@ -13,7 +13,7 @@ public:
 
 TEST_F(Gate_XOR_Test, Gate_XOR_Test_0)
 {
-	xorGate[0] = 0; xorGate[1] = 0;
+	xorGate[0] = OFF; xorGate[1] = OFF;
 	xorGate.process();
 
 	EXPECT_EQ(xorGate.output(), 0);
@@ -21,7 +21,7 @@ TEST_F(Gate_XOR_Test, Gate_XOR_Test_0)
 
 TEST_F(Gate_XOR_Test, Gate_XOR_Test_1)
 {
-	xorGate[0] = 0; xorGate[1] = 1;
+	xorGate[0] = OFF; xorGate[1] = ON;
 	xorGate.process();
 
 	EXPECT_EQ(xorGate.output(), 1);
@@ -29,7 +29,7 @@ TEST_F(Gate_XOR_Test, Gate_XOR_Test_1)
 
 TEST_F(Gate_XOR_Test, Gate_XOR_Test_2)
 {
-	xorGate[0] = 1; xorGate[1] = 0;
+	xorGate[0] = ON; xorGate[1] = OFF;
 	xorGate.process();
 
 	EXPECT_EQ(xorGate.output(), 1);
@@ -37,7 +37,7 @@ TEST_F(Gate_XOR_Test, Gate_XOR_Test_2)
 
 TEST_F(Gate_XOR_Test, Gate_XOR_Test_3)
 {
-	xorGate[0] = 1; xorGate[1] = 1;
+	xorGate[0] = ON; xorGate[1] = ON;
 	xorGate.process();
 
 	EXPECT_EQ(xorGate.output(), 0);

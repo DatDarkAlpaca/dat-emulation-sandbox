@@ -25,26 +25,26 @@ namespace dat
 		}
 
 	public:
-		void setA(bool value) { (*this)[0] = value; }
+		void setA(State value) { (*this)[0] = value; }
 
-		void setB(bool value) { (*this)[1] = value; }
+		void setB(State value) { (*this)[1] = value; }
 
-		void setCarryIn(bool value) { (*this)[2] = value; }
+		void setCarryIn(State value) { (*this)[2] = value; }
 
-		void setF0(bool value) { (*this)[3] = value; }
+		void setF0(State value) { (*this)[3] = value; }
 
-		void setF1(bool value) { (*this)[4] = value; }
+		void setF1(State value) { (*this)[4] = value; }
 
 	public:
-		bool getA() const { return (*this)[0]; }
+		State getA() const { return (*this)[0]; }
 
-		bool getB() const { return (*this)[1]; }
+		State getB() const { return (*this)[1]; }
 
-		bool getCarryIn() const { return (*this)[2]; }
+		State getCarryIn() const { return (*this)[2]; }
 
-		bool getF0() const { return (*this)[3]; }
+		State getF0() const { return (*this)[3]; }
 
-		bool getF1() const { return (*this)[4]; }
+		State getF1() const { return (*this)[4]; }
 
 	public:
 		void process() override
@@ -67,14 +67,14 @@ namespace dat
 			setOutput(1, fullAdder.getCarryOut());	// Carry Out
 
 			// Inputs:
-			bool I0 = logicUnit.getNotOutput();
-			bool I1 = decoder->output(0);
-			bool I2 = logicUnit.getOrOutput();
-			bool I3 = decoder->output(1);
-			bool I4 = logicUnit.getAndOutput();
-			bool I5 = decoder->output(2);
-			bool I6 = decoder->output(3);
-			bool I7 = fullAdder.getSum();
+			State I0 = logicUnit.getNotOutput();
+			State I1 = decoder->output(0);
+			State I2 = logicUnit.getOrOutput();
+			State I3 = decoder->output(1);
+			State I4 = logicUnit.getAndOutput();
+			State I5 = decoder->output(2);
+			State I6 = decoder->output(3);
+			State I7 = fullAdder.getSum();
 
 			// Aliases:
 			auto& A = andGates;
@@ -106,9 +106,9 @@ namespace dat
 		}
 
 	public:
-		bool getOutput() const { return output(); }
+		State getOutput() const { return output(); }
 
-		bool getCarryOut() const { return output(1); }
+		State getCarryOut() const { return output(1); }
 
 	private:
 		std::array<AND_Gate, 4> andGates;

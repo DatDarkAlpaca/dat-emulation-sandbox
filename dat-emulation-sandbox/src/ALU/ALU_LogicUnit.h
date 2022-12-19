@@ -7,34 +7,34 @@ namespace dat
 	class ALU_LogicUnit : public Component<2, 3>
 	{
 	public:
-		void setA(bool value) { (*this)[0] = value; }
+		void setA(State value) { (*this)[0] = value; }
 
-		void setB(bool value) { (*this)[1] = value; }
+		void setB(State value) { (*this)[1] = value; }
 
 	public:
-		bool getA() const { return (*this)[0]; }
+		State getA() const { return (*this)[0]; }
 
-		bool getB() const { return (*this)[1]; }
+		State getB() const { return (*this)[1]; }
 
 	private:
-		void setNotOutput(bool value) { setOutput(0, value); }
+		void setNotOutput(State value) { setOutput(0, value); }
 
-		void setOrOutput(bool value) { setOutput(1, value); }
+		void setOrOutput(State value) { setOutput(1, value); }
 
-		void setAndOutput(bool value) { setOutput(2, value); }
+		void setAndOutput(State value) { setOutput(2, value); }
 
 	public:
-		bool getNotOutput() const { return output(0); }
+		State getNotOutput() const { return output(0); }
 
-		bool getOrOutput() const { return output(1); }
+		State getOrOutput() const { return output(1); }
 
-		bool getAndOutput() const { return output(2); }
+		State getAndOutput() const { return output(2); }
 
 	public:
 		void process() override
 		{
-			bool A = getA();
-			bool B = getB();
+			State A = getA();
+			State B = getB();
 
 			// Not:
 			notGate[0] = A;

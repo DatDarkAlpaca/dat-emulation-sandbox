@@ -13,23 +13,23 @@ public:
 
 TEST_F(Latch_D_Latch_Test, Latch_D_Latch_Test_Latching)
 {
-	dLatch.setD(0); dLatch.setEnable(0);
+	dLatch.setD(OFF); dLatch.setEnable(OFF);
 	dLatch.process();
-	EXPECT_EQ(dLatch.getQ(), 1); EXPECT_EQ(dLatch.getQ_INV(), 0);
+	EXPECT_EQ(dLatch.getQ(), ON); EXPECT_EQ(dLatch.getQ_INV(), OFF);
 
-	dLatch.setD(1); dLatch.setEnable(0);
+	dLatch.setD(ON); dLatch.setEnable(OFF);
 	dLatch.process();
-	EXPECT_EQ(dLatch.getQ(), 1); EXPECT_EQ(dLatch.getQ_INV(), 0);
+	EXPECT_EQ(dLatch.getQ(), ON); EXPECT_EQ(dLatch.getQ_INV(), OFF);
 
-	dLatch.setD(1); dLatch.setEnable(1);
+	dLatch.setD(ON); dLatch.setEnable(ON);
 	dLatch.process();
-	EXPECT_EQ(dLatch.getQ(), 1); EXPECT_EQ(dLatch.getQ_INV(), 0);
+	EXPECT_EQ(dLatch.getQ(), ON); EXPECT_EQ(dLatch.getQ_INV(), OFF);
 
-	dLatch.setD(0); dLatch.setEnable(1);
+	dLatch.setD(OFF); dLatch.setEnable(ON);
 	dLatch.process();
-	EXPECT_EQ(dLatch.getQ(), 0); EXPECT_EQ(dLatch.getQ_INV(), 1);
+	EXPECT_EQ(dLatch.getQ(), OFF); EXPECT_EQ(dLatch.getQ_INV(), ON);
 
-	dLatch.setD(1); dLatch.setEnable(1);
+	dLatch.setD(ON); dLatch.setEnable(ON);
 	dLatch.process();
-	EXPECT_EQ(dLatch.getQ(), 1); EXPECT_EQ(dLatch.getQ_INV(), 0);
+	EXPECT_EQ(dLatch.getQ(), ON); EXPECT_EQ(dLatch.getQ_INV(), OFF);
 }

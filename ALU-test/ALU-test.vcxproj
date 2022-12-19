@@ -64,10 +64,12 @@
     <ClCompile Include="src\components\HalfAdder_Test.cpp" />
     <ClCompile Include="src\flip_flops\D_FlipFlop_Test.cpp" />
     <ClCompile Include="src\gates\AND_Test.cpp" />
+    <ClCompile Include="src\gates\Buffer_Test.cpp" />
     <ClCompile Include="src\gates\NAND_Test.cpp" />
     <ClCompile Include="src\gates\NOR_Test.cpp" />
     <ClCompile Include="src\gates\NOT_Test.cpp" />
     <ClCompile Include="src\gates\OR_Test.cpp" />
+    <ClCompile Include="src\gates\TristateBuffer_Test.cpp" />
     <ClCompile Include="src\gates\XNOR_Test.cpp" />
     <ClCompile Include="src\gates\XOR_Test.cpp" />
     <ClCompile Include="src\latches\D_Latch_Test.cpp" />

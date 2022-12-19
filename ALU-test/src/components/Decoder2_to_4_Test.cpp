@@ -14,72 +14,72 @@ public:
 
 TEST_F(ALU_Decoder_Test, ALU_Decoder_Test_F0)
 {
-	decoder.setF0(0);
-	EXPECT_EQ(decoder.getF0(), 0);
+	decoder.setF0(OFF);
+	EXPECT_EQ(decoder.getF0(), OFF);
 }
 
 TEST_F(ALU_Decoder_Test, ALU_Decoder_Test_F1)
 {
-	decoder.setF1(1);
-	EXPECT_EQ(decoder.getF1(), 1);
+	decoder.setF1(ON);
+	EXPECT_EQ(decoder.getF1(), ON);
 }
 
 TEST_F(ALU_Decoder_Test, ALU_Decoder_Test_0)
 {
-	// Given: F0 = 0, F1 = 0
-	decoder.setF1(0); decoder.setF0(0);
+	// Given: F0 = OFF, F1 = OFF
+	decoder.setF1(OFF); decoder.setF0(OFF);
 
 	// For:
 	decoder.process();
 
 	// Then: Output = 0001
-	EXPECT_EQ(decoder.output(3), 0);
-	EXPECT_EQ(decoder.output(2), 0);
-	EXPECT_EQ(decoder.output(1), 0);
-	EXPECT_EQ(decoder.output(0), 1);
+	EXPECT_EQ(decoder.output(3), OFF);
+	EXPECT_EQ(decoder.output(2), OFF);
+	EXPECT_EQ(decoder.output(ON), OFF);
+	EXPECT_EQ(decoder.output(OFF), ON);
 }
 
 TEST_F(ALU_Decoder_Test, ALU_Decoder_Test_1)
 {
-	// Given: F0 = 0, F1 = 1
-	decoder.setF1(0); decoder.setF0(1);
+	// Given: F0 = OFF, F1 = ON
+	decoder.setF1(OFF); decoder.setF0(ON);
 
 	// For:
 	decoder.process();
 
 	// Then: Output = 0010
-	EXPECT_EQ(decoder.output(3), 0);
-	EXPECT_EQ(decoder.output(2), 0);
-	EXPECT_EQ(decoder.output(1), 1);
-	EXPECT_EQ(decoder.output(0), 0);
+	EXPECT_EQ(decoder.output(3), OFF);
+	EXPECT_EQ(decoder.output(2), OFF);
+	EXPECT_EQ(decoder.output(ON), ON);
+	EXPECT_EQ(decoder.output(OFF), OFF);
 }
 
 TEST_F(ALU_Decoder_Test, ALU_Decoder_Test_2)
 {
-	// Given: F0 = 1, F1 = 0
-	decoder.setF1(1); decoder.setF0(0);
+	// Given: F0 = ON, F1 = OFF
+	decoder.setF1(ON); decoder.setF0(OFF);
 
 	// For:
 	decoder.process();
 
 	// Then: Output = 0100
-	EXPECT_EQ(decoder.output(3), 0);
-	EXPECT_EQ(decoder.output(2), 1);
-	EXPECT_EQ(decoder.output(1), 0);
-	EXPECT_EQ(decoder.output(0), 0);
+	EXPECT_EQ(decoder.output(3), OFF);
+	EXPECT_EQ(decoder.output(2), ON);
+	EXPECT_EQ(decoder.output(ON), OFF);
+	EXPECT_EQ(decoder.output(OFF), OFF);
 }
 
 TEST_F(ALU_Decoder_Test, ALU_Decoder_Test_3)
 {
-	// Given: F0 = 1, F1 = 1
-	decoder.setF1(1); decoder.setF0(1);
+	// Given: F0 = ON, F1 = ON
+	decoder.setF1(ON); decoder.setF0(ON);
 
 	// For:
 	decoder.process();
 
 	// Then: Output = 1000
-	EXPECT_EQ(decoder.output(3), 1);
-	EXPECT_EQ(decoder.output(2), 0);
-	EXPECT_EQ(decoder.output(1), 0);
-	EXPECT_EQ(decoder.output(0), 0);
+	EXPECT_EQ(decoder.output(3), ON);
+	EXPECT_EQ(decoder.output(2), OFF);
+	EXPECT_EQ(decoder.output(ON), OFF);
+	EXPECT_EQ(decoder.output(OFF), OFF);
 }

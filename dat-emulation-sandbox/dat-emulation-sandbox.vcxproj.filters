@@ -80,6 +80,18 @@
     <ClInclude Include="src\flip_flops\D_FlipFlop.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\gates\Buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\State.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gates\TristateBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\Register_1bit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">

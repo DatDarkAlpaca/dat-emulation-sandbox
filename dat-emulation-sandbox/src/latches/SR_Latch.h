@@ -8,28 +8,34 @@ namespace dat
 	class SR_Latch : public Component<2, 2>
 	{
 	public:
-		bool getR() const { return (*this)[0]; }
-		
-		void setR(bool value) { (*this)[0] = value; }
-
-		bool getS() const { return (*this)[1]; }
-
-		void setS(bool value) { (*this)[1] = value; }
+		SR_Latch()
+		{
+			// Q initially open:
+			norGates[0][1] = OFF;
+		}
 
 	public:
-		bool getQ() const { return output(0); }
+		State getR() const { return (*this)[0]; }
+		
+		void setR(State value) { (*this)[0] = value; }
 
-		bool getQ_INV() const { return output(1); }
+		State getS() const { return (*this)[1]; }
+
+		void setS(State value) { (*this)[1] = value; }
+
+	public:
+		State getQ() const { return output(0); }
+
+		State getQ_INV() const { return output(1); }
 
 	private:
-		void setQ(bool value) { setOutput(0, value); }
+		void setQ(State value) { setOutput(0, value); }
 
-		void setQ_INV(bool value) { setOutput(1, value); }
+		void setQ_INV(State value) { setOutput(1, value); }
 
 	public:
 		void process() override
 		{
-			// Q initially open:
 			norGates[0][0] = getR();
 			norGates[0].process();
 

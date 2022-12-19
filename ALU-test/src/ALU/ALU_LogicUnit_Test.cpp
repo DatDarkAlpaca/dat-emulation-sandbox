@@ -14,32 +14,32 @@ public:
 
 TEST_F(ALU_LogicUnit_Test, ALU_LogicUnit_Test_0)
 {
-	LU.setA(0); LU.setB(0);
+	LU.setA(OFF); LU.setB(OFF);
 	LU.process();
 
-	EXPECT_EQ(LU.output(0), 1); EXPECT_EQ(LU.output(1), 0); EXPECT_EQ(LU.output(2), 0);
+	EXPECT_EQ(LU.output(OFF), ON); EXPECT_EQ(LU.output(ON), OFF); EXPECT_EQ(LU.output(2), OFF);
 }
 
 TEST_F(ALU_LogicUnit_Test, ALU_LogicUnit_Test_1)
 {
-	LU.setA(0); LU.setB(1);
+	LU.setA(OFF); LU.setB(ON);
 	LU.process();
 
-	EXPECT_EQ(LU.output(0), 1); EXPECT_EQ(LU.output(1), 1); EXPECT_EQ(LU.output(2), 0);
+	EXPECT_EQ(LU.output(OFF), ON); EXPECT_EQ(LU.output(ON), ON); EXPECT_EQ(LU.output(2), OFF);
 }
 
 TEST_F(ALU_LogicUnit_Test, ALU_LogicUnit_Test_2)
 {
-	LU.setA(1); LU.setB(0);
+	LU.setA(ON); LU.setB(OFF);
 	LU.process();
 
-	EXPECT_EQ(LU.output(0), 0); EXPECT_EQ(LU.output(1), 1); EXPECT_EQ(LU.output(2), 0);
+	EXPECT_EQ(LU.output(OFF), OFF); EXPECT_EQ(LU.output(ON), ON); EXPECT_EQ(LU.output(2), OFF);
 }
 
 TEST_F(ALU_LogicUnit_Test, ALU_LogicUnit_Test_3)
 {
-	LU.setA(1); LU.setB(1);
+	LU.setA(ON); LU.setB(ON);
 	LU.process();
 
-	EXPECT_EQ(LU.output(0), 0); EXPECT_EQ(LU.output(1), 1); EXPECT_EQ(LU.output(2), 1);
+	EXPECT_EQ(LU.output(OFF), OFF); EXPECT_EQ(LU.output(ON), ON); EXPECT_EQ(LU.output(2), ON);
 }

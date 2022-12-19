@@ -13,16 +13,16 @@ public:
 
 TEST_F(Gate_NOT_Test, Gate_NOT_Test_0)
 {
-	notGate[0] = 0;
+	notGate[0] = OFF;
 	notGate.process();
 
-	EXPECT_EQ(notGate.output(), 1);
+	EXPECT_EQ(notGate.output(), ON);
 }
 
 TEST_F(Gate_NOT_Test, Gate_NOT_Test_1)
 {
-	notGate[0] = 1;
+	notGate[0] = ON;
 	notGate.process();
 
-	EXPECT_EQ(notGate.output(), 0);
+	EXPECT_EQ(notGate.output(), OFF);
 }

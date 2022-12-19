@@ -8,20 +8,20 @@ namespace dat
 	class Decoder2_to_4 : public Component<2, 4>
 	{
 	public:
-		void setF0(bool value) { (*this)[0] = value; }
+		void setF0(State value) { (*this)[0] = value; }
 
-		void setF1(bool value) { (*this)[1] = value; }
+		void setF1(State value) { (*this)[1] = value; }
 
 	public:
-		bool getF0() const { return (*this)[0]; }
+		State getF0() const { return (*this)[0]; }
 
-		bool getF1() const { return (*this)[1]; }
+		State getF1() const { return (*this)[1]; }
 
 	public:
 		void process() override
 		{
 			// Input Aliases:
-			bool F0 = getF0(), F1 = getF1();
+			State F0 = getF0(), F1 = getF1();
 
 			// Gate Aliases:
 			auto& N = notGates;

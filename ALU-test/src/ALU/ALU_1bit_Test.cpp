@@ -14,104 +14,104 @@ public:
 
 TEST_F(ALU_1bit_Test, ALU_1bit_Test_NOT_A)
 {
-	alu.setF0(0); alu.setF1(0);
+	alu.setF0(OFF); alu.setF1(OFF);
 
 	dat::Decoder2_to_4 decoder;
 	alu.setDecoder(&decoder);
 
-	alu.setA(0);
+	alu.setA(OFF);
 	alu.process();
-	EXPECT_EQ(alu.output(), 1);
+	EXPECT_EQ(alu.output(), ON);
 
-	alu.setA(1);
+	alu.setA(ON);
 	alu.process();
-	EXPECT_EQ(alu.output(), 0);
+	EXPECT_EQ(alu.output(), OFF);
 }
 
 TEST_F(ALU_1bit_Test, ALU_1bit_Test_A_OR_B)
 {
-	alu.setF0(1); alu.setF1(0);
+	alu.setF0(ON); alu.setF1(OFF);
 
 	dat::Decoder2_to_4 decoder;
 	alu.setDecoder(&decoder);
 
-	alu.setA(0); alu.setB(0);
+	alu.setA(OFF); alu.setB(OFF);
 	alu.process();
-	EXPECT_EQ(alu.output(), 0);
+	EXPECT_EQ(alu.output(), OFF);
 
-	alu.setA(0); alu.setB(1);
+	alu.setA(OFF); alu.setB(ON);
 	alu.process();
-	EXPECT_EQ(alu.output(), 1);
+	EXPECT_EQ(alu.output(), ON);
 
-	alu.setA(1); alu.setB(0);
+	alu.setA(ON); alu.setB(OFF);
 	alu.process();
-	EXPECT_EQ(alu.output(), 1);
+	EXPECT_EQ(alu.output(), ON);
 
-	alu.setA(1); alu.setB(1);
+	alu.setA(ON); alu.setB(ON);
 	alu.process();
-	EXPECT_EQ(alu.output(), 1);
+	EXPECT_EQ(alu.output(), ON);
 }
 
 TEST_F(ALU_1bit_Test, ALU_1bit_Test_A_AND_B)
 {
-	alu.setF0(0); alu.setF1(1);
+	alu.setF0(OFF); alu.setF1(ON);
 
 	dat::Decoder2_to_4 decoder;
 	alu.setDecoder(&decoder);
 
-	alu.setA(0); alu.setB(0);
+	alu.setA(OFF); alu.setB(OFF);
 	alu.process();
-	EXPECT_EQ(alu.output(), 0);
+	EXPECT_EQ(alu.output(), OFF);
 
-	alu.setA(0); alu.setB(1);
+	alu.setA(OFF); alu.setB(ON);
 	alu.process();
-	EXPECT_EQ(alu.output(), 0);
+	EXPECT_EQ(alu.output(), OFF);
 
-	alu.setA(1); alu.setB(0);
+	alu.setA(ON); alu.setB(OFF);
 	alu.process();
-	EXPECT_EQ(alu.output(), 0);
+	EXPECT_EQ(alu.output(), OFF);
 
-	alu.setA(1); alu.setB(1);
+	alu.setA(ON); alu.setB(ON);
 	alu.process();
-	EXPECT_EQ(alu.output(), 1);
+	EXPECT_EQ(alu.output(), ON);
 }
 
 TEST_F(ALU_1bit_Test, ALU_1bit_Test_A_PLUS_B)
 {
-	alu.setF0(1); alu.setF1(1);
+	alu.setF0(ON); alu.setF1(ON);
 
 	dat::Decoder2_to_4 decoder;
 	alu.setDecoder(&decoder);
 
-	alu.setA(0); alu.setB(0); alu.setCarryIn(0);
+	alu.setA(OFF); alu.setB(OFF); alu.setCarryIn(OFF);
 	alu.process();
-	EXPECT_EQ(alu.getOutput(), 0); EXPECT_EQ(alu.getCarryOut(), 0);
+	EXPECT_EQ(alu.getOutput(), OFF); EXPECT_EQ(alu.getCarryOut(), OFF);
 
-	alu.setA(1); alu.setB(0); alu.setCarryIn(0);
+	alu.setA(ON); alu.setB(OFF); alu.setCarryIn(OFF);
 	alu.process();
-	EXPECT_EQ(alu.getOutput(), 1); EXPECT_EQ(alu.getCarryOut(), 0);
+	EXPECT_EQ(alu.getOutput(), ON); EXPECT_EQ(alu.getCarryOut(), OFF);
 
-	alu.setA(0); alu.setB(1); alu.setCarryIn(0);
+	alu.setA(OFF); alu.setB(ON); alu.setCarryIn(OFF);
 	alu.process();
-	EXPECT_EQ(alu.getOutput(), 1); EXPECT_EQ(alu.getCarryOut(), 0);
+	EXPECT_EQ(alu.getOutput(), ON); EXPECT_EQ(alu.getCarryOut(), OFF);
 
-	alu.setA(1); alu.setB(1); alu.setCarryIn(0);
+	alu.setA(ON); alu.setB(ON); alu.setCarryIn(OFF);
 	alu.process();
-	EXPECT_EQ(alu.getOutput(), 0); EXPECT_EQ(alu.getCarryOut(), 1);
+	EXPECT_EQ(alu.getOutput(), OFF); EXPECT_EQ(alu.getCarryOut(), ON);
 
-	alu.setA(0); alu.setB(0); alu.setCarryIn(1);
+	alu.setA(OFF); alu.setB(OFF); alu.setCarryIn(ON);
 	alu.process();
-	EXPECT_EQ(alu.getOutput(), 1); EXPECT_EQ(alu.getCarryOut(), 0);
+	EXPECT_EQ(alu.getOutput(), ON); EXPECT_EQ(alu.getCarryOut(), OFF);
 
-	alu.setA(1); alu.setB(0); alu.setCarryIn(1);
+	alu.setA(ON); alu.setB(OFF); alu.setCarryIn(ON);
 	alu.process();
-	EXPECT_EQ(alu.getOutput(), 0); EXPECT_EQ(alu.getCarryOut(), 1);
+	EXPECT_EQ(alu.getOutput(), OFF); EXPECT_EQ(alu.getCarryOut(), ON);
 
-	alu.setA(0); alu.setB(1); alu.setCarryIn(1);
+	alu.setA(OFF); alu.setB(ON); alu.setCarryIn(ON);
 	alu.process();
-	EXPECT_EQ(alu.getOutput(), 0); EXPECT_EQ(alu.getCarryOut(), 1);
+	EXPECT_EQ(alu.getOutput(), OFF); EXPECT_EQ(alu.getCarryOut(), ON);
 
-	alu.setA(1); alu.setB(1); alu.setCarryIn(1);
+	alu.setA(ON); alu.setB(ON); alu.setCarryIn(ON);
 	alu.process();
-	EXPECT_EQ(alu.getOutput(), 1); EXPECT_EQ(alu.getCarryOut(), 1);
+	EXPECT_EQ(alu.getOutput(), ON); EXPECT_EQ(alu.getCarryOut(), ON);
 }

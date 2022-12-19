@@ -1,6 +1,7 @@
 #pragma once
 #include <chrono>
 #include <functional>
+#include "State.h"
 
 namespace dat
 {
@@ -15,10 +16,10 @@ namespace dat
 		virtual void push() = 0;
 
 	public:
-		bool output() const { return m_Output; }
+		State output() const { return m_Output; }
 
 	protected:
-		bool m_Output = false;
+		State m_Output = State::OFF_STATE;
 	};
 
 	class AstableClock : public Clock
@@ -65,12 +66,12 @@ namespace dat
 	public:
 		void reset() override
 		{
-			m_Output = false;
+			m_Output = OFF;
 		}
 
 		void push() override
 		{
-			m_Output = true;
+			m_Output = ON;
 		}
 	};
 
@@ -79,7 +80,7 @@ namespace dat
 	public:
 		void reset() override
 		{
-			m_Output = false;
+			m_Output = OFF;
 		}
 
 		void push() override
@@ -92,7 +93,7 @@ namespace dat
 	class EdgeDetector
 	{
 	public:
-		void detectPositive(bool clockOutput, std::function<void(void)> function)
+		void detectPositive(State clockOutput, std::function<void(void)> function)
 		{
 			if (!m_OldClock && clockOutput)
 				function();
@@ -101,7 +102,7 @@ namespace dat
 		}
 
 	public:
-		bool m_OldClock = false;
+		State m_OldClock = OFF;
 	};
 
 }

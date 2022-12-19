@@ -13,48 +13,36 @@ public:
 
 TEST_F(COMP_Half_Adder_Test, COMP_Half_Adder_Test_0)
 {
-	// Given: A = 0, B = 0
-	fullAdder.setA(0); fullAdder.setB(0);
+	fullAdder.setA(OFF); fullAdder.setB(OFF);
 
-	// When:
 	fullAdder.process();
 
-	// Then: Sum = 0, Carry = 0
-	EXPECT_EQ(fullAdder.getSum(), 0); EXPECT_EQ(fullAdder.getCarryOut(), 0);
+	EXPECT_EQ(fullAdder.getSum(), OFF); EXPECT_EQ(fullAdder.getCarryOut(), OFF);
 }
 
 TEST_F(COMP_Half_Adder_Test, COMP_Half_Adder_Test_1)
 {
-	// Given: A = 1, B = 0
-	fullAdder.setA(1); fullAdder.setB(0);
+	fullAdder.setA(ON); fullAdder.setB(OFF);
 
-	// When:
 	fullAdder.process();
-
-	// Then: Sum = 1, Carry = 0
-	EXPECT_EQ(fullAdder.getSum(), 1); EXPECT_EQ(fullAdder.getCarryOut(), 0);
+	
+	EXPECT_EQ(fullAdder.getSum(), ON); EXPECT_EQ(fullAdder.getCarryOut(), OFF);
 }
 
 TEST_F(COMP_Half_Adder_Test, COMP_Half_Adder_Test_2)
 {
-	// Given: A = 0, B = 1
-	fullAdder.setA(0); fullAdder.setB(1);
+	fullAdder.setA(OFF); fullAdder.setB(ON);
 
-	// When:
 	fullAdder.process();
 
-	// Then: Sum = 1, Carry = 0
-	EXPECT_EQ(fullAdder.getSum(), 1); EXPECT_EQ(fullAdder.getCarryOut(), 0);
+	EXPECT_EQ(fullAdder.getSum(), ON); EXPECT_EQ(fullAdder.getCarryOut(), OFF);
 }
 
 TEST_F(COMP_Half_Adder_Test, COMP_Half_Adder_Test_3)
 {
-	// Given: A = 1, B = 1
-	fullAdder.setA(1); fullAdder.setB(1);
+	fullAdder.setA(ON); fullAdder.setB(ON);
 
-	// When:
 	fullAdder.process();
 
-	// Then: Sum = 1, Carry = 0
-	EXPECT_EQ(fullAdder.getSum(), 0); EXPECT_EQ(fullAdder.getCarryOut(), 1);
+	EXPECT_EQ(fullAdder.getSum(), OFF); EXPECT_EQ(fullAdder.getCarryOut(), ON);
 }

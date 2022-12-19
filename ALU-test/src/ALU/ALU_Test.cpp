@@ -15,25 +15,25 @@ public:
 TEST_F(ALU_Test, ALU_Test_0)
 {
 	dat::ALU alu;
-	alu.setF0(1); alu.setF1(1);
+	alu.setF0(ON); alu.setF1(ON);
 
-	alu.setNumericA(0);
-	alu.setNumericB(0);
-	alu.setCarryIn(0);
+	alu.setNumericA(OFF);
+	alu.setNumericB(OFF);
+	alu.setCarryIn(OFF);
 
 	alu.process();
 
-	EXPECT_EQ((int)alu.getNumeric(), 0);
+	EXPECT_EQ((int)alu.getNumeric(), OFF);
 }
 
 TEST_F(ALU_Test, ALU_Test_1)
 {
 	dat::ALU alu;
-	alu.setF0(1); alu.setF1(1);
+	alu.setF0(ON); alu.setF1(ON);
 
 	alu.setNumericA(128);
-	alu.setNumericB(0);
-	alu.setCarryIn(0);
+	alu.setNumericB(OFF);
+	alu.setCarryIn(OFF);
 
 	alu.process();
 

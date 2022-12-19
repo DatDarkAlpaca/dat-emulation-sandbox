@@ -9,34 +9,34 @@ namespace dat
 	class Full_Adder : public Component<3, 2>
 	{
 	public:
-		bool getA() const { return (*this)[0]; }
+		State getA() const { return (*this)[0]; }
 
-		void setA(bool value) { (*this)[0] = value; }
+		void setA(State value) { (*this)[0] = value; }
 
-		bool getB() const { return (*this)[1]; }
+		State getB() const { return (*this)[1]; }
 
-		void setB(bool value) { (*this)[1] = value; }
+		void setB(State value) { (*this)[1] = value; }
 
-		bool getCarryIn() const { return (*this)[2]; }
+		State getCarryIn() const { return (*this)[2]; }
 
-		void setCarryIn(bool value) { (*this)[2] = value; }
+		void setCarryIn(State value) { (*this)[2] = value; }
 
 	public:
-		bool getSum() const { return output(0); }
+		State getSum() const { return output(0); }
 
-		bool getCarryOut() const { return output(1); }
+		State getCarryOut() const { return output(1); }
 
 	private:
-		void setSum(bool value) { setOutput(0, value); }
+		void setSum(State value) { setOutput(0, value); }
 
-		void setCarryOut(bool value) { setOutput(1, value); }
+		void setCarryOut(State value) { setOutput(1, value); }
 
 	public:
 		void process() override
 		{
-			bool A = getA();
-			bool B = getB();
-			bool carryIn = getCarryIn();
+			State A = getA();
+			State B = getB();
+			State carryIn = getCarryIn();
 
 			// Inputs:
 			halfAdders[0].setA(A);
