@@ -1,10 +1,7 @@
 #include <iostream>
 #include <conio.h>
 #include "Clock.h"
-#include "gates/AND_Gate.h"
-
-#include "components/Register_1bit.h"
-#include "flip_flops/D_FlipFlop.h"
+#include "register/Register.h"
 
 int getchNonBlock()
 {
@@ -17,34 +14,57 @@ int main()
 {
 	using namespace dat;
 	
-	AstableClock clock(100);
+	AstableClock clock(1 / 1'000'000);
 	EdgeDetector edgeDetector;
 	
-	Register_1bit register1bit;
+	Register_1bit registerCI;
 
 	while (true)
 	{
 		clock.push();
 		
 		int a = getchNonBlock();
-		if (a == 119)
+
+		if (a == 112) // P
 		{
-			register1bit.setEnable(ON);
-			register1bit.setLoad(ON);
-			register1bit.setD1(ON);
+			std::cout << registerCI.output(0) << "\n";
 		}
-		else if (a == 115)
+		if (a == 122) // Z
 		{
-			register1bit.setEnable(OFF);
-			register1bit.setLoad(OFF);
-			register1bit.setD1(OFF);
+			registerCI.setEnable(!registerCI.getEnable());
+
+			if(registerCI.getEnable())
+				std::cout << "ENABLED ON\n";
+			else
+				std::cout << "ENABLED OFF\n";
 		}
 
-		register1bit.setClock(clock.output());
+		if (a == 108) // L
+		{
+			registerCI.setLoad(!registerCI.getLoad());
+
+			if(!registerCI.getLoad())
+				std::cout << "LOAD OFF\n";
+			else
+				std::cout << "LOAD ON\n";
+		}
+
+		if (a == 119) // W
+		{
+			std::cout << "D1 ON\n";
+			registerCI.setD1(ON);
+		}
+
+		else if (a == 115) // S
+		{
+			std::cout << "D1 OFF\n";
+			registerCI.setD1(OFF);
+		}
+
+		registerCI.setClock(clock.output());
 
 		edgeDetector.detectPositive(clock.output(), [&]() {
-			register1bit.process();
-			std::cout << register1bit.output() << "\n";
+			registerCI.process();
 		});
 	}
 

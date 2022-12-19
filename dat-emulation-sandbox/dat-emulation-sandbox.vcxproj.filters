@@ -89,7 +89,10 @@
     <ClInclude Include="src\gates\TristateBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\components\Register_1bit.h">
+    <ClInclude Include="src\register\Register_1bit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\register\Register.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

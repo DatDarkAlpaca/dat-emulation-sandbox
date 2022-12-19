@@ -11,7 +11,9 @@ namespace dat
 	public:
 		Register_1bit()
 		{
-			andGates[0][0] = OFF;
+			setEnable(OFF);
+			setLoad(OFF);
+			andGates[0][0] = ON;
 		}
 
 	public:
@@ -37,6 +39,7 @@ namespace dat
 			notGate[0] = getLoad();
 			notGate.process();
 
+			// andGates[0][0] = default;
 			andGates[0][1] = notGate.output();
 			andGates[0].process();
 
@@ -52,7 +55,7 @@ namespace dat
 			flipFlop.setClock(getClock());
 			flipFlop.process();
 
-			andGates[0][1] = flipFlop.getQ();
+			andGates[0][0] = flipFlop.getQ();
 
 			triBuffer.setEnable(getEnable());
 			triBuffer.setInput(flipFlop.getQ());

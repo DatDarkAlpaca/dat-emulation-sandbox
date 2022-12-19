@@ -170,7 +170,7 @@
     <ClInclude Include="src\components\Half_Adder.h" />
     <ClInclude Include="src\ALU\ALU_LogicUnit.h" />
     <ClInclude Include="src\Component.h" />
-    <ClInclude Include="src\components\Register_1bit.h" />
+    <ClInclude Include="src\register\Register_1bit.h" />
     <ClInclude Include="src\flip_flops\D_FlipFlop.h" />
     <ClInclude Include="src\gates\AND_Gate.h" />
     <ClInclude Include="src\gates\Buffer.h" />
@@ -185,6 +185,7 @@
     <ClInclude Include="src\gates\XOR_Gate_4IN.h" />
     <ClInclude Include="src\latches\D_Latch.h" />
     <ClInclude Include="src\latches\SR_Latch.h" />
+    <ClInclude Include="src\register\Register.h" />
     <ClInclude Include="src\State.h" />
   </ItemGroup>
   <ItemGroup>
