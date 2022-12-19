@@ -1,5 +1,6 @@
 #pragma once
 #include <chrono>
+#include <functional>
 
 namespace dat
 {
@@ -85,5 +86,22 @@ namespace dat
 		{
 			m_Output = !m_Output;
 		}
-	};	
+	};
+
+	// Todo: move both the clock and the edge detector
+	class EdgeDetector
+	{
+	public:
+		void detectPositive(bool clockOutput, std::function<void(void)> function)
+		{
+			if (!m_OldClock && clockOutput)
+				function();
+
+			m_OldClock = clockOutput;
+		}
+
+	public:
+		bool m_OldClock = false;
+	};
+
 }
