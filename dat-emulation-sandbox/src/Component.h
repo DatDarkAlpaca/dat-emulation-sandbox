@@ -1,8 +1,4 @@
 #pragma once
-#if _DEBUG
-	#include <cstdio>
-#endif
-
 #include <array>
 
 namespace dat
@@ -21,18 +17,6 @@ namespace dat
 		}
 
 		virtual ~Component() = default;
-
-	public:
-#if _DEBUG
-		virtual void display(const char* gateName) const
-		{
-			for (int i = 0; i < m_Inputs.size(); ++i)
-				printf("%s [%d]i: %d\n", gateName, i, m_Inputs[i]);
-
-			for (int i = 0; i < m_Outputs.size(); ++i)
-				printf("%s [%d]o: %d\n", gateName, i, m_Outputs[i]);
-		}
-#endif
 
 	public:
 		bool operator[](size_t pinIndex) const
