@@ -164,6 +164,7 @@
   <ItemGroup>
     <ClInclude Include="src\ALU\ALU.h" />
     <ClInclude Include="src\ALU\ALU_1bit.h" />
+    <ClInclude Include="src\Clock.h" />
     <ClInclude Include="src\components\Decoder2_to_4.h" />
     <ClInclude Include="src\components\Full_Adder.h" />
     <ClInclude Include="src\components\Half_Adder.h" />
