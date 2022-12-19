@@ -8,7 +8,7 @@
 
 namespace dat
 {
-	struct ALU_1bit : public Component<5, 2>
+	class ALU_1bit : public Component<5, 2>
 	{
 	public:
 		ALU_1bit(Decoder2_to_4* decoder)

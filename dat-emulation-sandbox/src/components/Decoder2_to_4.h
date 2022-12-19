@@ -5,7 +5,7 @@
 
 namespace dat
 {
-	struct Decoder2_to_4 : public Component<2, 4>
+	class Decoder2_to_4 : public Component<2, 4>
 	{
 	public:
 		void setF0(bool value) { (*this)[0] = value; }

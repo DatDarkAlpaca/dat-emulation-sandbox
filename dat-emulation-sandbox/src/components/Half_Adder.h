@@ -5,7 +5,7 @@
 
 namespace dat
 {
-	struct Half_Adder : public Component<2, 2>
+	class Half_Adder : public Component<2, 2>
 	{
 	public:
 		bool getA() const { return (*this)[0]; }

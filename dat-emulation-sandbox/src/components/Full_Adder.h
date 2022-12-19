@@ -6,7 +6,7 @@
 
 namespace dat
 {
-	struct Full_Adder : public Component<3, 2>
+	class Full_Adder : public Component<3, 2>
 	{
 	public:
 		bool getA() const { return (*this)[0]; }

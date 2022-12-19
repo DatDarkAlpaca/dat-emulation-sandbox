@@ -4,7 +4,7 @@
 
 namespace dat
 {
-	struct ALU_LogicUnit : public Component<2, 3>
+	class ALU_LogicUnit : public Component<2, 3>
 	{
 	public:
 		void setA(bool value) { (*this)[0] = value; }

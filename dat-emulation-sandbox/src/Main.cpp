@@ -1,16 +1,19 @@
-#include "ALU/ALU_1bit.h"
+#include "ALU/ALU.h"
 #include <iostream>
 
 int main()
 {
-	dat::Decoder2_to_4 decoder;
-	dat::ALU_1bit alu(&decoder);
-	alu.setF0(1); alu.setF1(0);
+	// ALU:
+	dat::ALU alu;
+	alu.setF0(1); alu.setF1(1);
 
-	alu.setA(1); alu.setB(1);
+	alu.setNumericA(255);
+	alu.setNumericB(255);
+	alu.setCarryIn(1);
+
 	alu.process();
 
-	std::cout << alu.output() << '\n';
+	alu.getNumeric();
 
 	return 0;
 }
