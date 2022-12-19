@@ -103,11 +103,11 @@ namespace dat
 
 		uint8_t getNumeric() const
 		{
+			uint8_t result = 0;
 			for (size_t i = 0; i < alus.size(); ++i)
-				std::cout << "O[" << i << "]: " << output(i) << '\n';
+				result += output(i)* pow(2, i);
 
-			std::cout << "C: " << output(8) << '\n';
-			return 0;
+			return result;
 		}
 
 	public:

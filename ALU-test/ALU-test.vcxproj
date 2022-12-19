@@ -58,6 +58,7 @@
   <ItemGroup>
     <ClCompile Include="src\ALU\ALU_1bit_Test.cpp" />
     <ClCompile Include="src\ALU\ALU_LogicUnit_Test.cpp" />
+    <ClCompile Include="src\ALU\ALU_Test.cpp" />
     <ClCompile Include="src\components\Decoder2_to_4_Test.cpp" />
     <ClCompile Include="src\components\FullAdder_Test.cpp" />
     <ClCompile Include="src\components\HalfAdder_Test.cpp" />
