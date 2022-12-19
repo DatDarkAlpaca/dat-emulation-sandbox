@@ -63,8 +63,11 @@
     <ClCompile Include="src\components\FullAdder_Test.cpp" />
     <ClCompile Include="src\components\HalfAdder_Test.cpp" />
     <ClCompile Include="src\gates\AND_Test.cpp" />
+    <ClCompile Include="src\gates\NAND_Test.cpp" />
+    <ClCompile Include="src\gates\NOR_Test.cpp" />
     <ClCompile Include="src\gates\NOT_Test.cpp" />
     <ClCompile Include="src\gates\OR_Test.cpp" />
+    <ClCompile Include="src\gates\XNOR_Test.cpp" />
     <ClCompile Include="src\gates\XOR_Test.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -59,6 +59,15 @@
     <ClInclude Include="src\ALU\ALU.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\gates\NAND_Gate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gates\NOR_Gate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gates\XNOR_Gate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
