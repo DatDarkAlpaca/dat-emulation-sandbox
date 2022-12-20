@@ -47,4 +47,13 @@ namespace dat
 		std::array<State, InputAmount> m_Inputs;
 		std::array<State, OutputAmount> m_Outputs;
 	};
+
+	#define SET_PIN(DEVICE, PIN, VALUE) \
+	DEVICE[PIN] = VALUE
+
+	#define PIN_VAL(DEVICE, PIN)	\
+	DEVICE[PIN]
+
+	#define PIN_STR(DEVICE, PIN)	\
+	getString(DEVICE[PIN])
 }

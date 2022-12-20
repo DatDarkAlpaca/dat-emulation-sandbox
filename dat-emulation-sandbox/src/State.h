@@ -9,9 +9,32 @@ namespace dat
 		ON_STATE   = true
 	};
 
-#define ON dat::State::ON_STATE
-#define OFF dat::State::OFF_STATE
 #define ZERO dat::State::ZERO_STATE
+#define OFF dat::State::OFF_STATE
+#define ON dat::State::ON_STATE
+
+	inline const char* getString(State state)
+	{
+		switch (state)
+		{
+			case State::ZERO_STATE:
+				return "ZERO";
+			case State::OFF_STATE:
+				return "OFF";
+			case State::ON_STATE:
+				return "ON";
+			default:
+				return "INVALID";
+		}
+	}
+
+	inline State fromBool(bool value)
+	{
+		if (value)
+			return ON;
+
+		return OFF;
+	}
 
 	inline State operator&&(State lhs, State rhs)
 	{
@@ -23,14 +46,6 @@ namespace dat
 
 		if ((lhs == ON || rhs == ON) && (lhs == ZERO || rhs == ZERO))
 			return ZERO;
-
-		return OFF;
-	}
-
-	inline State fromBool(bool value)
-	{
-		if (value)
-			return ON;
 
 		return OFF;
 	}

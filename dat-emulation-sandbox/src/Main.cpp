@@ -10,19 +10,19 @@ int getchNonBlock()
 	return 0;
 }
 
-int main()
+void registerTest()
 {
 	using namespace dat;
-	
+
 	AstableClock clock(1 / 1'000'000);
 	EdgeDetector edgeDetector;
-	
+
 	Register_1bit registerCI;
 
 	while (true)
 	{
 		clock.push();
-		
+
 		int a = getchNonBlock();
 
 		if (a == 112) // P
@@ -33,7 +33,7 @@ int main()
 		{
 			registerCI.setEnable(!registerCI.getEnable());
 
-			if(registerCI.getEnable())
+			if (registerCI.getEnable())
 				std::cout << "ENABLED ON\n";
 			else
 				std::cout << "ENABLED OFF\n";
@@ -43,7 +43,7 @@ int main()
 		{
 			registerCI.setLoad(!registerCI.getLoad());
 
-			if(!registerCI.getLoad())
+			if (!registerCI.getLoad())
 				std::cout << "LOAD OFF\n";
 			else
 				std::cout << "LOAD ON\n";
@@ -67,6 +67,12 @@ int main()
 			registerCI.process();
 		});
 	}
+}
 
-	return 0;
+int main()
+{
+	using namespace dat;
+	AND_Gate gate;
+	SET_PIN(gate, AND_Gate::IN_0, ON);
+	std::cout << PIN_STR(gate, AND_Gate::IN_0);
 }
