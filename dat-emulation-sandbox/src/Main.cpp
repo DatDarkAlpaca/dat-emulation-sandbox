@@ -75,6 +75,4 @@ int main()
 	AND_Gate gate;
 
 	gate.setPin(AND_Gate::IN_0, ON);
-
-	//std::cout << PIN_STR(gate, AND_Gate::IN_0);
 }

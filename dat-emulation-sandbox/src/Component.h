@@ -48,6 +48,11 @@ namespace dat
 			m_Pins[pin] = OFF;
 		}
 
+		const char* pinStr(size_t pin) const
+		{
+			return getString(getPin(pin));
+		}
+
 	public:
 		virtual void process() { }
 
