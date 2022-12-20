@@ -13,26 +13,30 @@ public:
 
 TEST_F(Gate_TristateBuffer_Test, Gate_TristateBuffer_Test_0)
 {
-	buffer.setEnable(OFF);
+	using namespace dat;
 
-	buffer.setInput(ON);
+	SET_PIN(buffer, TriStateBuffer::ENABLE, OFF);
+
+	SET_PIN(buffer, TriStateBuffer::IN, ON);
 	buffer.process();
 	EXPECT_EQ(buffer.output(), ZERO);
 
-	buffer.setInput(ON);
+	SET_PIN(buffer, TriStateBuffer::IN, ON);
 	buffer.process();
 	EXPECT_EQ(buffer.output(), ZERO);
 }
 
 TEST_F(Gate_TristateBuffer_Test, Gate_TristateBuffer_Test_1)
 {
-	buffer.setEnable(ON);
+	using namespace dat;
 
-	buffer.setInput(ON);
+	SET_PIN(buffer, TriStateBuffer::ENABLE, ON);
+
+	SET_PIN(buffer, TriStateBuffer::IN, ON);
 	buffer.process();
 	EXPECT_EQ(buffer.output(), ON);
 
-	buffer.setInput(OFF);
+	SET_PIN(buffer, TriStateBuffer::IN, OFF);
 	buffer.process();
 	EXPECT_EQ(buffer.output(), OFF);
 }

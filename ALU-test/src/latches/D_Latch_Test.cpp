@@ -13,23 +13,25 @@ public:
 
 TEST_F(Latch_D_Latch_Test, Latch_D_Latch_Test_Latching)
 {
-	dLatch.setD(OFF); dLatch.setEnable(OFF);
-	dLatch.process();
-	EXPECT_EQ(dLatch.getQ(), ON); EXPECT_EQ(dLatch.getQ_INV(), OFF);
+	using namespace dat;
 
-	dLatch.setD(ON); dLatch.setEnable(OFF);
+	PIN_OFF(dLatch, D_Latch::D); PIN_OFF(dLatch, D_Latch::ENABLE);
 	dLatch.process();
-	EXPECT_EQ(dLatch.getQ(), ON); EXPECT_EQ(dLatch.getQ_INV(), OFF);
+	EXPECT_EQ(PIN_VAL(dLatch, D_Latch::Q), ON); EXPECT_EQ(PIN_VAL(dLatch, D_Latch::Q_INV), OFF);
 
-	dLatch.setD(ON); dLatch.setEnable(ON);
+	PIN_ON(dLatch, D_Latch::D); PIN_OFF(dLatch, D_Latch::ENABLE);
 	dLatch.process();
-	EXPECT_EQ(dLatch.getQ(), ON); EXPECT_EQ(dLatch.getQ_INV(), OFF);
+	EXPECT_EQ(PIN_VAL(dLatch, D_Latch::Q), ON); EXPECT_EQ(PIN_VAL(dLatch, D_Latch::Q_INV), OFF);
 
-	dLatch.setD(OFF); dLatch.setEnable(ON);
+	PIN_ON(dLatch, D_Latch::D); PIN_ON(dLatch, D_Latch::ENABLE);
 	dLatch.process();
-	EXPECT_EQ(dLatch.getQ(), OFF); EXPECT_EQ(dLatch.getQ_INV(), ON);
+	EXPECT_EQ(PIN_VAL(dLatch, D_Latch::Q), ON); EXPECT_EQ(PIN_VAL(dLatch, D_Latch::Q_INV), OFF);
 
-	dLatch.setD(ON); dLatch.setEnable(ON);
+	PIN_OFF(dLatch, D_Latch::D); PIN_ON(dLatch, D_Latch::ENABLE);
 	dLatch.process();
-	EXPECT_EQ(dLatch.getQ(), ON); EXPECT_EQ(dLatch.getQ_INV(), OFF);
+	EXPECT_EQ(PIN_VAL(dLatch, D_Latch::Q), OFF); EXPECT_EQ(PIN_VAL(dLatch, D_Latch::Q_INV), ON);
+
+	PIN_ON(dLatch, D_Latch::D); PIN_ON(dLatch, D_Latch::ENABLE);
+	dLatch.process();
+	EXPECT_EQ(PIN_VAL(dLatch, D_Latch::Q), ON); EXPECT_EQ(PIN_VAL(dLatch, D_Latch::Q_INV), OFF);
 }

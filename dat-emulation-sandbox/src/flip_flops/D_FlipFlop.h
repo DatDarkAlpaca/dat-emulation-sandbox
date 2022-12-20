@@ -9,33 +9,24 @@ namespace dat
 	class D_FlipFlop : public Component<2, 2>
 	{
 	public:
-		State getD() const { return (*this)[0]; }
+		static inline constexpr unsigned D = 0;
 
-		void setD(State value) { (*this)[0] = value; }
+		static inline constexpr unsigned CLOCK = 1;
 
-		State getClock() const { return (*this)[1]; }
+		static inline constexpr unsigned Q = 0;
 
-		void setClock(State value) { (*this)[1] = value; }
-
-	public:
-		State getQ() const { return output(0); }
-
-		State getQ_INV() const { return output(1); }
-
-	private:
-		void setQ(State value) { setOutput(0, value); }
-
-		void setQ_INV(State value) { setOutput(1, value); }
+		static inline constexpr unsigned Q_INV = 1;
 
 	public:
 		void process() override
 		{
-			dLatch.setD(getD());
-			dLatch.setEnable(getClock());
-			dLatch.process();
 			
-			setQ(dLatch.getQ());
-			setQ_INV(dLatch.getQ_INV());
+			SET_PIN(dLatch, D_Latch::D, PIN_VAL((*this), D));
+			SET_PIN(dLatch, D_Latch::ENABLE, PIN_VAL((*this), CLOCK));
+			dLatch.process();
+
+			SET_PIN((*this), Q, PIN_VAL(dLatch, D_Latch::Q));
+			SET_PIN((*this), Q_INV, PIN_VAL(dLatch, D_Latch::Q_INV));
 		}
 
 	private:

@@ -50,8 +50,8 @@ namespace dat
 		void process() override
 		{
 			// Decoder Input:
-			decoder->setF0(getF0());
-			decoder->setF1(getF1());
+			SET_PIN((*decoder), Decoder2_to_4::F0, getF0());
+			SET_PIN((*decoder), Decoder2_to_4::F1, getF1());
 			decoder->process();
 
 			// LU Input:
@@ -60,11 +60,12 @@ namespace dat
 			logicUnit.process();
 
 			// FA Input:
-			fullAdder.setA(getA());
-			fullAdder.setB(getB());
-			fullAdder.setCarryIn(getCarryIn());
+			SET_PIN(fullAdder, Full_Adder::A, getA());
+			SET_PIN(fullAdder, Full_Adder::B, getB());
+			SET_PIN(fullAdder, Full_Adder::CARRY_IN, getCarryIn());
 			fullAdder.process();
-			setOutput(1, fullAdder.getCarryOut());	// Carry Out
+
+			setOutput(1, PIN_VAL(fullAdder, Full_Adder::CARRY_OUT));	// Carry Out
 
 			// Inputs:
 			State I0 = logicUnit.getNotOutput();
@@ -74,7 +75,7 @@ namespace dat
 			State I4 = logicUnit.getAndOutput();
 			State I5 = decoder->output(2);
 			State I6 = decoder->output(3);
-			State I7 = fullAdder.getSum();
+			State I7 = PIN_VAL(fullAdder, Full_Adder::SUM);
 
 			// Aliases:
 			auto& A = andGates;

@@ -31,9 +31,9 @@ void registerTest()
 		}
 		if (a == 122) // Z
 		{
-			registerCI.setEnable(!registerCI.getEnable());
+			SET_PIN(registerCI, Register_1bit::ENABLE, !PIN_VAL(registerCI, Register_1bit::ENABLE));
 
-			if (registerCI.getEnable())
+			if (PIN_VAL(registerCI, Register_1bit::ENABLE))
 				std::cout << "ENABLED ON\n";
 			else
 				std::cout << "ENABLED OFF\n";
@@ -41,9 +41,9 @@ void registerTest()
 
 		if (a == 108) // L
 		{
-			registerCI.setLoad(!registerCI.getLoad());
+			SET_PIN(registerCI, Register_1bit::LOAD, !PIN_VAL(registerCI, Register_1bit::LOAD));
 
-			if (!registerCI.getLoad())
+			if (!PIN_VAL(registerCI, Register_1bit::LOAD))
 				std::cout << "LOAD OFF\n";
 			else
 				std::cout << "LOAD ON\n";
@@ -52,16 +52,16 @@ void registerTest()
 		if (a == 119) // W
 		{
 			std::cout << "D1 ON\n";
-			registerCI.setD1(ON);
+			SET_PIN(registerCI, Register_1bit::D1, ON);
 		}
 
 		else if (a == 115) // S
 		{
 			std::cout << "D1 OFF\n";
-			registerCI.setD1(OFF);
+			SET_PIN(registerCI, Register_1bit::D1, OFF);
 		}
 
-		registerCI.setClock(clock.output());
+		SET_PIN(registerCI, Register_1bit::CLK, clock.output());
 
 		edgeDetector.detectPositive(clock.output(), [&]() {
 			registerCI.process();

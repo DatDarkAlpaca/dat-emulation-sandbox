@@ -9,45 +9,35 @@ namespace dat
 	class D_Latch : public Component<2, 2>
 	{
 	public:
-		State getD() const { return (*this)[0]; }
+		static inline constexpr unsigned D = 0;
 
-		void setD(State value) { (*this)[0] = value; }
+		static inline constexpr unsigned ENABLE = 1;
 
-		State getEnable() const { return (*this)[1]; }
+		static inline constexpr unsigned Q = 0;
 
-		void setEnable(State value) { (*this)[1] = value; }
-
-	public:
-		State getQ() const { return output(0); }
-
-		State getQ_INV() const { return output(1); }
-
-	private:
-		void setQ(State value) { setOutput(0, value); }
-
-		void setQ_INV(State value) { setOutput(1, value); }
+		static inline constexpr unsigned Q_INV = 1;
 
 	public:
 		void process() override
 		{
-			notGate[0] = getD();
+			notGate[0] = PIN_VAL((*this), D);
 			notGate.process();
 
 			andGates[0][0] = notGate.output();
-			andGates[0][1] = getEnable();
+			andGates[0][1] = PIN_VAL((*this), ENABLE);
 			andGates[0].process();
 
-			andGates[1][0] = getEnable();
-			andGates[1][1] = getD();
+			andGates[1][0] = PIN_VAL((*this), ENABLE);
+			andGates[1][1] = PIN_VAL((*this), D);
 			andGates[1].process();
 
-			srLatch.setR(andGates[0].output());
-			srLatch.setS(andGates[1].output());
+			SET_PIN(srLatch, SR_Latch::R, andGates[0].output());
+			SET_PIN(srLatch, SR_Latch::S, andGates[1].output());
 			
 			srLatch.process();
-
-			setQ(srLatch.getQ());
-			setQ_INV(srLatch.getQ_INV());
+			
+			SET_PIN((*this), Q, PIN_VAL(srLatch, SR_Latch::Q));
+			SET_PIN((*this), Q_INV, PIN_VAL(srLatch, SR_Latch::Q_INV));
 		}
 
 	private:

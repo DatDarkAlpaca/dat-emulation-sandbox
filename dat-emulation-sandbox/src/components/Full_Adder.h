@@ -9,50 +9,40 @@ namespace dat
 	class Full_Adder : public Component<3, 2>
 	{
 	public:
-		State getA() const { return (*this)[0]; }
+		static inline constexpr unsigned A = 0;
 
-		void setA(State value) { (*this)[0] = value; }
+		static inline constexpr unsigned B = 1;
 
-		State getB() const { return (*this)[1]; }
+		static inline constexpr unsigned CARRY_IN = 2;
 
-		void setB(State value) { (*this)[1] = value; }
+		static inline constexpr unsigned SUM = 0;
 
-		State getCarryIn() const { return (*this)[2]; }
-
-		void setCarryIn(State value) { (*this)[2] = value; }
-
-	public:
-		State getSum() const { return output(0); }
-
-		State getCarryOut() const { return output(1); }
-
-	private:
-		void setSum(State value) { setOutput(0, value); }
-
-		void setCarryOut(State value) { setOutput(1, value); }
+		static inline constexpr unsigned CARRY_OUT = 1;
 
 	public:
 		void process() override
 		{
-			State A = getA();
-			State B = getB();
-			State carryIn = getCarryIn();
+			State valueA = PIN_VAL((*this), A);
+			State valueB = PIN_VAL((*this), B);
+			State carryIn = PIN_VAL((*this), CARRY_IN);
 
 			// Inputs:
-			halfAdders[0].setA(A);
-			halfAdders[0].setB(B);
+			SET_PIN(halfAdders[0], Half_Adder::A, valueA);
+			SET_PIN(halfAdders[0], Half_Adder::B, valueB);
 			halfAdders[0].process();
 
-			halfAdders[1].setA(carryIn);
-			halfAdders[1].setB(halfAdders[0].getSum());
+			SET_PIN(halfAdders[1], Half_Adder::A, carryIn);
+			SET_PIN(halfAdders[1], Half_Adder::B, PIN_VAL(halfAdders[0], Half_Adder::SUM));
 			halfAdders[1].process();
-			setSum(halfAdders[1].getSum());
+
+			SET_PIN((*this), SUM, PIN_VAL(halfAdders[1], Half_Adder::SUM));
 
 			// OR:
-			orGate[0] = halfAdders[1].getCarryOut();
-			orGate[1] = halfAdders[0].getCarryOut();
+			orGate[0] = PIN_VAL(halfAdders[1], Half_Adder::CARRY_OUT);
+			orGate[1] = PIN_VAL(halfAdders[0], Half_Adder::CARRY_OUT);
 			orGate.process();
-			setCarryOut(orGate.output());
+
+			SET_PIN((*this), CARRY_OUT, orGate.output());
 		}
 
 	private:

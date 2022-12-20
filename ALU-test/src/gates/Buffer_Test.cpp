@@ -13,14 +13,14 @@ public:
 
 TEST_F(Gate_Buffer_Test, Gate_Buffer_Test_0)
 {
-	buffer.setInput(ON);
+	SET_PIN(buffer, dat::Buffer::IN, ON);
 	buffer.process();
 	EXPECT_EQ(buffer.output(), ON);
 }
 
 TEST_F(Gate_Buffer_Test, Gate_Buffer_Test_1)
 {
-	buffer.setInput(OFF);
+	SET_PIN(buffer, dat::Buffer::IN, OFF);
 	buffer.process();
 	EXPECT_EQ(buffer.output(), OFF);
 }

@@ -7,14 +7,14 @@ namespace dat
 	class Buffer : public Component<1, 1>
 	{
 	public:
-		void setInput(State value) { (*this)[0] = value; }
+		static inline constexpr unsigned IN = 0;
 
-		State getInput() const { return (*this)[0]; }
+		static inline constexpr unsigned OUT = 0;
 
 	public:
 		void process() override
 		{
-			setOutput(0, getInput());
+			setOutput(OUT, PIN_VAL((*this), IN));
 		}
 	};
 }

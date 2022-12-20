@@ -1,48 +1,53 @@
 #include "pch.h"
 #include "components/Half_Adder.h"
 
-class COMP_Half_Adder_Test : public testing::Test
+namespace
 {
-public:
-	void SetUp() override {}
-	void TearDown() override { }
+	using namespace dat;
 
-public:
-	dat::Half_Adder fullAdder;
-};
+	class COMP_Half_Adder_Test : public testing::Test
+	{
+	public:
+		void SetUp() override {}
+		void TearDown() override { }
 
-TEST_F(COMP_Half_Adder_Test, COMP_Half_Adder_Test_0)
-{
-	fullAdder.setA(OFF); fullAdder.setB(OFF);
+	public:
+		dat::Half_Adder halfAdder;
+	};
 
-	fullAdder.process();
+	TEST_F(COMP_Half_Adder_Test, COMP_Half_Adder_Test_0)
+	{
+		PIN_OFF(halfAdder, Half_Adder::A); PIN_OFF(halfAdder, Half_Adder::B);
 
-	EXPECT_EQ(fullAdder.getSum(), OFF); EXPECT_EQ(fullAdder.getCarryOut(), OFF);
-}
+		halfAdder.process();
 
-TEST_F(COMP_Half_Adder_Test, COMP_Half_Adder_Test_1)
-{
-	fullAdder.setA(ON); fullAdder.setB(OFF);
+		EXPECT_EQ(PIN_VAL(halfAdder, Half_Adder::SUM), OFF); EXPECT_EQ(PIN_VAL(halfAdder, Half_Adder::CARRY_OUT), OFF);
+	}
 
-	fullAdder.process();
-	
-	EXPECT_EQ(fullAdder.getSum(), ON); EXPECT_EQ(fullAdder.getCarryOut(), OFF);
-}
+	TEST_F(COMP_Half_Adder_Test, COMP_Half_Adder_Test_1)
+	{
+		PIN_ON(halfAdder, Half_Adder::A); PIN_OFF(halfAdder, Half_Adder::B);
 
-TEST_F(COMP_Half_Adder_Test, COMP_Half_Adder_Test_2)
-{
-	fullAdder.setA(OFF); fullAdder.setB(ON);
+		halfAdder.process();
 
-	fullAdder.process();
+		EXPECT_EQ(PIN_VAL(halfAdder, Half_Adder::SUM), ON); EXPECT_EQ(PIN_VAL(halfAdder, Half_Adder::CARRY_OUT), OFF);
+	}
 
-	EXPECT_EQ(fullAdder.getSum(), ON); EXPECT_EQ(fullAdder.getCarryOut(), OFF);
-}
+	TEST_F(COMP_Half_Adder_Test, COMP_Half_Adder_Test_2)
+	{
+		PIN_OFF(halfAdder, Half_Adder::A); PIN_ON(halfAdder, Half_Adder::B);
 
-TEST_F(COMP_Half_Adder_Test, COMP_Half_Adder_Test_3)
-{
-	fullAdder.setA(ON); fullAdder.setB(ON);
+		halfAdder.process();
 
-	fullAdder.process();
+		EXPECT_EQ(PIN_VAL(halfAdder, Half_Adder::SUM), ON); EXPECT_EQ(PIN_VAL(halfAdder, Half_Adder::CARRY_OUT), OFF);
+	}
 
-	EXPECT_EQ(fullAdder.getSum(), OFF); EXPECT_EQ(fullAdder.getCarryOut(), ON);
+	TEST_F(COMP_Half_Adder_Test, COMP_Half_Adder_Test_3)
+	{
+		PIN_ON(halfAdder, Half_Adder::A); PIN_ON(halfAdder, Half_Adder::B);
+
+		halfAdder.process();
+
+		EXPECT_EQ(PIN_VAL(halfAdder, Half_Adder::SUM), OFF); EXPECT_EQ(PIN_VAL(halfAdder, Half_Adder::CARRY_OUT), ON);
+	}
 }

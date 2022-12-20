@@ -6,21 +6,19 @@ namespace dat
 	class TriStateBuffer : public Component<2, 1>
 	{
 	public:
-		void setEnable(State value) { (*this)[0] = value; }
+		static inline constexpr unsigned IN = 0;
 
-		State getEnable() const { return (*this)[0]; }
+		static inline constexpr unsigned ENABLE = 1;
 
-		void setInput(State value) { (*this)[1] = value; }
-
-		State getInput() const { return (*this)[1]; }
+		static inline constexpr unsigned OUT = 0;
 
 	public:
 		void process() override
 		{
-			if (!getEnable())
+			if (!PIN_VAL((*this), ENABLE))
 				setOutput(0, ZERO);
 			else
-				setOutput(0, getInput());
+				setOutput(0, PIN_VAL((*this), IN));
 		}
 	};
 }

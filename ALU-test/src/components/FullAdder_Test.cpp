@@ -1,102 +1,108 @@
 #include "pch.h"
 #include "components/Full_Adder.h"
 
-class COMP_Full_Adder_Test : public testing::Test
+namespace
 {
-public:
-	void SetUp() override {}
-	void TearDown() override { }
+	using namespace dat;
 
-public:
-	dat::Full_Adder fullAdder;
-};
+	class COMP_Full_Adder_Test : public testing::Test
+	{
+	public:
+		void SetUp() override {}
+		void TearDown() override { }
 
-TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_A)
-{
-	fullAdder.setA(ON);
-	EXPECT_EQ(fullAdder.getA(), ON);
-}
+	public:
+		dat::Full_Adder fullAdder;
+	};
 
-TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_B)
-{
-	fullAdder.setB(ON);
-	EXPECT_EQ(fullAdder.getB(), ON);
-}
+	TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_A)
+	{
+		PIN_ON(fullAdder, Full_Adder::A);
+		EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::A), ON);
+	}
 
-TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_CarryIn)
-{
-	fullAdder.setCarryIn(ON);
-	EXPECT_EQ(fullAdder.getCarryIn(), ON);
-}
+	TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_B)
+	{
+		PIN_ON(fullAdder, Full_Adder::B);
+		EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::B), ON);
+	}
 
-TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_0)
-{
-	fullAdder.setA(OFF); fullAdder.setB(OFF); fullAdder.setCarryIn(OFF);
+	TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_CarryIn)
+	{
+		PIN_ON(fullAdder, Full_Adder::CARRY_IN);
+		EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::CARRY_IN), ON);
+	}
 
-	fullAdder.process();
+	TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_0)
+	{
+		PIN_OFF(fullAdder, Full_Adder::A); PIN_OFF(fullAdder, Full_Adder::B); PIN_OFF(fullAdder, Full_Adder::CARRY_IN);
 
-	EXPECT_EQ(fullAdder.getSum(), OFF); EXPECT_EQ(fullAdder.getCarryOut(), OFF);
-}
+		fullAdder.process();
 
-TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_1)
-{
-	fullAdder.setA(ON); fullAdder.setB(OFF); fullAdder.setCarryIn(OFF);
+		EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::SUM), OFF); EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::CARRY_OUT), OFF);
+	}
 
-	fullAdder.process();
+	TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_1)
+	{
+		PIN_ON(fullAdder, Full_Adder::A); PIN_OFF(fullAdder, Full_Adder::B); PIN_OFF(fullAdder, Full_Adder::CARRY_IN);
 
-	EXPECT_EQ(fullAdder.getSum(), ON); EXPECT_EQ(fullAdder.getCarryOut(), OFF);
-}
+		fullAdder.process();
 
-TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_2)
-{
-	fullAdder.setA(OFF); fullAdder.setB(ON); fullAdder.setCarryIn(OFF);
+		EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::SUM), ON); EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::CARRY_OUT), OFF);
+	}
 
-	fullAdder.process();
+	TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_2)
+	{
+		PIN_OFF(fullAdder, Full_Adder::A); PIN_ON(fullAdder, Full_Adder::B); PIN_OFF(fullAdder, Full_Adder::CARRY_IN);
 
-	EXPECT_EQ(fullAdder.getSum(), ON); EXPECT_EQ(fullAdder.getCarryOut(), OFF);
-}
+		fullAdder.process();
 
-TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_3)
-{
-	fullAdder.setA(ON); fullAdder.setB(ON); fullAdder.setCarryIn(OFF);
+		EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::SUM), ON); EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::CARRY_OUT), OFF);
+	}
 
-	fullAdder.process();
+	TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_3)
+	{
+		PIN_ON(fullAdder, Full_Adder::A); PIN_ON(fullAdder, Full_Adder::B); PIN_OFF(fullAdder, Full_Adder::CARRY_IN);
 
-	EXPECT_EQ(fullAdder.getSum(), OFF); EXPECT_EQ(fullAdder.getCarryOut(), ON);
-}
+		fullAdder.process();
 
-TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_4)
-{
-	fullAdder.setA(OFF); fullAdder.setB(OFF); fullAdder.setCarryIn(ON);
+		EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::SUM), OFF); EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::CARRY_OUT), ON);
+	}
 
-	fullAdder.process();
+	TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_4)
+	{
+		PIN_OFF(fullAdder, Full_Adder::A); PIN_OFF(fullAdder, Full_Adder::B); PIN_ON(fullAdder, Full_Adder::CARRY_IN);
 
-	EXPECT_EQ(fullAdder.getSum(), ON); EXPECT_EQ(fullAdder.getCarryOut(), OFF);
-}
+		fullAdder.process();
 
-TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_5)
-{
-	fullAdder.setA(ON); fullAdder.setB(OFF); fullAdder.setCarryIn(ON);
+		EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::SUM), ON); EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::CARRY_OUT), OFF);
+	}
 
-	fullAdder.process();
+	TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_5)
+	{
+		PIN_ON(fullAdder, Full_Adder::A); PIN_OFF(fullAdder, Full_Adder::B); PIN_ON(fullAdder, Full_Adder::CARRY_IN);
 
-	EXPECT_EQ(fullAdder.getSum(), OFF); EXPECT_EQ(fullAdder.getCarryOut(), ON);
-}
+		fullAdder.process();
 
-TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_6)
-{
-	fullAdder.setA(OFF); fullAdder.setB(ON); fullAdder.setCarryIn(ON);
+		EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::SUM), OFF); EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::CARRY_OUT), ON);
+	}
 
-	fullAdder.process();
+	TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_6)
+	{
+		PIN_OFF(fullAdder, Full_Adder::A); PIN_ON(fullAdder, Full_Adder::B); PIN_ON(fullAdder, Full_Adder::CARRY_IN);
 
-	EXPECT_EQ(fullAdder.getSum(), OFF); EXPECT_EQ(fullAdder.getCarryOut(), ON);
-}
+		fullAdder.process();
 
-TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_7)
-{
-	fullAdder.setA(ON); fullAdder.setB(ON); fullAdder.setCarryIn(ON);
+		EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::SUM), OFF); EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::CARRY_OUT), ON);
+	}
 
-	fullAdder.process();
+	TEST_F(COMP_Full_Adder_Test, COMP_Full_Adder_Test_7)
+	{
 
-	EXPECT_EQ(fullAdder.getSum(), ON); EXPECT_EQ(fullAdder.getCarryOut(), ON);
+		PIN_ON(fullAdder, Full_Adder::A); PIN_ON(fullAdder, Full_Adder::B); PIN_ON(fullAdder, Full_Adder::CARRY_IN);
+
+		fullAdder.process();
+
+		EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::SUM), ON); EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::CARRY_OUT), ON);
+	}
 }

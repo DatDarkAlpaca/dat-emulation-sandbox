@@ -11,10 +11,10 @@ namespace dat
 		Component()
 		{
 			for (size_t i = 0; i < InputAmount; i++)
-				m_Inputs[i] = ZERO;
+				m_Inputs[i] = OFF;
 
 			for (size_t i = 0; i < OutputAmount; i++)
-				m_Outputs[i] = ZERO;
+				m_Outputs[i] = OFF;
 		}
 
 		virtual ~Component() = default;
@@ -50,6 +50,12 @@ namespace dat
 
 	#define SET_PIN(DEVICE, PIN, VALUE) \
 	DEVICE[PIN] = VALUE
+
+	#define PIN_OFF(DEVICE, PIN)	\
+	DEVICE[PIN] = dat::State::OFF_STATE
+
+	#define PIN_ON(DEVICE, PIN)	\
+	DEVICE[PIN] = dat::State::ON_STATE
 
 	#define PIN_VAL(DEVICE, PIN)	\
 	DEVICE[PIN]

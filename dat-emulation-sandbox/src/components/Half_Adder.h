@@ -8,43 +8,33 @@ namespace dat
 	class Half_Adder : public Component<2, 2>
 	{
 	public:
-		State getA() const { return (*this)[0]; }
+		static inline constexpr unsigned A = 0;
 
-		void setA(State value) { (*this)[0] = value; }
+		static inline constexpr unsigned B = 1;
 
-		State getB() const { return (*this)[1]; }
+		static inline constexpr unsigned SUM = 0;
 
-		void setB(State value) { (*this)[1] = value; }
-
-	public:
-		State getSum() const { return output(0); }
-
-		State getCarryOut() const { return output(1); }
-
-	private:
-		void setSum(State value) { setOutput(0, value); }
-
-		void setCarryOut(State value) { setOutput(1, value); }
+		static inline constexpr unsigned CARRY_OUT = 1;
 
 	public:
 		void process() override
 		{
-			State A = getA();
-			State B = getB();
+			State valueA = PIN_VAL((*this), A);
+			State valueB = PIN_VAL((*this), B);
 
 			// A:
-			xorGate[0] = A;
-			andGate[0] = A;
+			xorGate[0] = valueA;
+			andGate[0] = valueA;
 
 			// B:
-			xorGate[1] = B;
-			andGate[1] = B;
+			xorGate[1] = valueB;
+			andGate[1] = valueB;
 
 			xorGate.process();
 			andGate.process();
 
-			setSum(xorGate.output());
-			setCarryOut(andGate.output());
+			SET_PIN((*this), SUM, xorGate.output());
+			SET_PIN((*this), CARRY_OUT, andGate.output());
 		}
 
 	private:

@@ -56,13 +56,14 @@ namespace dat
 
 			for (size_t i = 0; i < REGISTER_BIT_SIZE; ++i)
 			{
-				registers[i].setClock(getClock());
-				registers[i].setLoad(getLoad());
-				registers[i].setEnable(getEnable());
-				registers[i].setD1(getData(i));
+				SET_PIN(registers[i], Register_1bit::CLK, getClock());
+				SET_PIN(registers[i], Register_1bit::LOAD, getLoad());
+				SET_PIN(registers[i], Register_1bit::ENABLE, getEnable());
+				SET_PIN(registers[i], Register_1bit::D1, getData(i));
+
 				registers[i].process();
 
-				setOutput(0, registers[0].output());
+				setOutput(i, registers[i].output());
 			}
 		}
 

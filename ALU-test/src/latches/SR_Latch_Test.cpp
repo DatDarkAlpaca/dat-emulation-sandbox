@@ -13,19 +13,21 @@ public:
 
 TEST_F(Latch_SR_Latch_Test, Latch_SR_Latch_Test_Latching)
 {
-	srLatch.setR(OFF); srLatch.setS(OFF);
-	srLatch.process();
-	EXPECT_EQ(srLatch.getQ(), ON); EXPECT_EQ(srLatch.getQ_INV(), OFF);
+	using namespace dat;
 
-	srLatch.setR(ON); srLatch.setS(OFF);
+	PIN_OFF(srLatch, SR_Latch::R); PIN_OFF(srLatch, SR_Latch::S);
 	srLatch.process();
-	EXPECT_EQ(srLatch.getQ(), OFF); EXPECT_EQ(srLatch.getQ_INV(), ON);
+	EXPECT_EQ(PIN_VAL(srLatch, SR_Latch::Q), ON); EXPECT_EQ(PIN_VAL(srLatch, SR_Latch::Q_INV), OFF);
 
-	srLatch.setR(OFF); srLatch.setS(OFF);
+	PIN_ON(srLatch, SR_Latch::R); PIN_OFF(srLatch, SR_Latch::S);
 	srLatch.process();
-	EXPECT_EQ(srLatch.getQ(), OFF); EXPECT_EQ(srLatch.getQ_INV(), ON);
+	EXPECT_EQ(PIN_VAL(srLatch, SR_Latch::Q), OFF); EXPECT_EQ(PIN_VAL(srLatch, SR_Latch::Q_INV), ON);
 
-	srLatch.setR(OFF); srLatch.setS(ON);
+	PIN_OFF(srLatch, SR_Latch::R); PIN_OFF(srLatch, SR_Latch::S);
 	srLatch.process();
-	EXPECT_EQ(srLatch.getQ(), ON); EXPECT_EQ(srLatch.getQ_INV(), OFF);
+	EXPECT_EQ(PIN_VAL(srLatch, SR_Latch::Q), OFF); EXPECT_EQ(PIN_VAL(srLatch, SR_Latch::Q_INV), ON);
+
+	PIN_OFF(srLatch, SR_Latch::R); PIN_ON(srLatch, SR_Latch::S);
+	srLatch.process();
+	EXPECT_EQ(PIN_VAL(srLatch, SR_Latch::Q), ON); EXPECT_EQ(PIN_VAL(srLatch, SR_Latch::Q_INV), OFF);
 }
