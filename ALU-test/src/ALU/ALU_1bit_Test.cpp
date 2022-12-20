@@ -14,104 +14,120 @@ public:
 
 TEST_F(ALU_1bit_Test, ALU_1bit_Test_NOT_A)
 {
-	alu.setF0(OFF); alu.setF1(OFF);
+	using namespace dat;
 
-	dat::Decoder2_to_4 decoder;
+	alu.pinOff(ALU_1bit::F0);
+	alu.pinOff(ALU_1bit::F1);
+
+	Decoder2_to_4 decoder;
 	alu.setDecoder(&decoder);
 
-	alu.setA(OFF);
+	alu.pinOff(ALU_1bit::A);
 	alu.process();
-	EXPECT_EQ(alu.output(), ON);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), ON);
 
-	alu.setA(ON);
+	alu.pinOn(ALU_1bit::A);
 	alu.process();
-	EXPECT_EQ(alu.output(), OFF);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), OFF);
 }
 
 TEST_F(ALU_1bit_Test, ALU_1bit_Test_A_OR_B)
 {
-	alu.setF0(ON); alu.setF1(OFF);
+	using namespace dat;
 
-	dat::Decoder2_to_4 decoder;
+	alu.pinOn(ALU_1bit::F0);
+	alu.pinOff(ALU_1bit::F1);
+
+	Decoder2_to_4 decoder;
 	alu.setDecoder(&decoder);
 
-	alu.setA(OFF); alu.setB(OFF);
+	alu.pinOff(ALU_1bit::A); 
+	alu.pinOff(ALU_1bit::B);
 	alu.process();
-	EXPECT_EQ(alu.output(), OFF);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), OFF);
 
-	alu.setA(OFF); alu.setB(ON);
+	alu.pinOff(ALU_1bit::A); 
+	alu.pinOn(ALU_1bit::B);
 	alu.process();
-	EXPECT_EQ(alu.output(), ON);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), ON);
 
-	alu.setA(ON); alu.setB(OFF);
+	alu.pinOn(ALU_1bit::A);
+	alu.pinOff(ALU_1bit::B);
 	alu.process();
-	EXPECT_EQ(alu.output(), ON);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), ON);
 
-	alu.setA(ON); alu.setB(ON);
+	alu.pinOn(ALU_1bit::A);
+	alu.pinOn(ALU_1bit::B);
 	alu.process();
-	EXPECT_EQ(alu.output(), ON);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), ON);
 }
 
 TEST_F(ALU_1bit_Test, ALU_1bit_Test_A_AND_B)
 {
-	alu.setF0(OFF); alu.setF1(ON);
+	using namespace dat;
+
+	alu.pinOff(ALU_1bit::F0);
+	alu.pinOn(ALU_1bit::F1);
 
 	dat::Decoder2_to_4 decoder;
 	alu.setDecoder(&decoder);
 
-	alu.setA(OFF); alu.setB(OFF);
+	alu.pinOff(ALU_1bit::A); alu.pinOff(ALU_1bit::B);
 	alu.process();
-	EXPECT_EQ(alu.output(), OFF);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), OFF);
 
-	alu.setA(OFF); alu.setB(ON);
+	alu.pinOff(ALU_1bit::A); alu.pinOn(ALU_1bit::B);
 	alu.process();
-	EXPECT_EQ(alu.output(), OFF);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), OFF);
 
-	alu.setA(ON); alu.setB(OFF);
+	alu.pinOn(ALU_1bit::A);alu.pinOff(ALU_1bit::B);
 	alu.process();
-	EXPECT_EQ(alu.output(), OFF);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), OFF);
 
-	alu.setA(ON); alu.setB(ON);
+	alu.pinOn(ALU_1bit::A);alu.pinOn(ALU_1bit::B);
 	alu.process();
-	EXPECT_EQ(alu.output(), ON);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), ON);
 }
 
 TEST_F(ALU_1bit_Test, ALU_1bit_Test_A_PLUS_B)
 {
-	alu.setF0(ON); alu.setF1(ON);
+	using namespace dat;
+
+	alu.pinOn(ALU_1bit::F0);
+	alu.pinOn(ALU_1bit::F1);
 
 	dat::Decoder2_to_4 decoder;
 	alu.setDecoder(&decoder);
 
-	alu.setA(OFF); alu.setB(OFF); alu.setCarryIn(OFF);
+	alu.pinOff(ALU_1bit::A); alu.pinOff(ALU_1bit::B); alu.pinOff(ALU_1bit::CARRY_IN);
 	alu.process();
-	EXPECT_EQ(alu.getOutput(), OFF); EXPECT_EQ(alu.getCarryOut(), OFF);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), OFF); EXPECT_EQ(alu.getPin(ALU_1bit::CARRY_OUT), OFF);
 
-	alu.setA(ON); alu.setB(OFF); alu.setCarryIn(OFF);
+	alu.pinOn(ALU_1bit::A);alu.pinOff(ALU_1bit::B); alu.pinOff(ALU_1bit::CARRY_IN);
 	alu.process();
-	EXPECT_EQ(alu.getOutput(), ON); EXPECT_EQ(alu.getCarryOut(), OFF);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), ON); EXPECT_EQ(alu.getPin(ALU_1bit::CARRY_OUT), OFF);
 
-	alu.setA(OFF); alu.setB(ON); alu.setCarryIn(OFF);
+	alu.pinOff(ALU_1bit::A); alu.pinOn(ALU_1bit::B); alu.pinOff(ALU_1bit::CARRY_IN);
 	alu.process();
-	EXPECT_EQ(alu.getOutput(), ON); EXPECT_EQ(alu.getCarryOut(), OFF);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), ON); EXPECT_EQ(alu.getPin(ALU_1bit::CARRY_OUT), OFF);
 
-	alu.setA(ON); alu.setB(ON); alu.setCarryIn(OFF);
+	alu.pinOn(ALU_1bit::A);alu.pinOn(ALU_1bit::B); alu.pinOff(ALU_1bit::CARRY_IN);
 	alu.process();
-	EXPECT_EQ(alu.getOutput(), OFF); EXPECT_EQ(alu.getCarryOut(), ON);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), OFF); EXPECT_EQ(alu.getPin(ALU_1bit::CARRY_OUT), ON);
 
-	alu.setA(OFF); alu.setB(OFF); alu.setCarryIn(ON);
+	alu.pinOff(ALU_1bit::A); alu.pinOff(ALU_1bit::B); alu.pinOn(ALU_1bit::CARRY_IN);
 	alu.process();
-	EXPECT_EQ(alu.getOutput(), ON); EXPECT_EQ(alu.getCarryOut(), OFF);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), ON); EXPECT_EQ(alu.getPin(ALU_1bit::CARRY_OUT), OFF);
 
-	alu.setA(ON); alu.setB(OFF); alu.setCarryIn(ON);
+	alu.pinOn(ALU_1bit::A);alu.pinOff(ALU_1bit::B); alu.pinOn(ALU_1bit::CARRY_IN);
 	alu.process();
-	EXPECT_EQ(alu.getOutput(), OFF); EXPECT_EQ(alu.getCarryOut(), ON);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), OFF); EXPECT_EQ(alu.getPin(ALU_1bit::CARRY_OUT), ON);
 
-	alu.setA(OFF); alu.setB(ON); alu.setCarryIn(ON);
+	alu.pinOff(ALU_1bit::A); alu.pinOn(ALU_1bit::B); alu.pinOn(ALU_1bit::CARRY_IN);
 	alu.process();
-	EXPECT_EQ(alu.getOutput(), OFF); EXPECT_EQ(alu.getCarryOut(), ON);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), OFF); EXPECT_EQ(alu.getPin(ALU_1bit::CARRY_OUT), ON);
 
-	alu.setA(ON); alu.setB(ON); alu.setCarryIn(ON);
+	alu.pinOn(ALU_1bit::A);alu.pinOn(ALU_1bit::B); alu.pinOn(ALU_1bit::CARRY_IN);
 	alu.process();
-	EXPECT_EQ(alu.getOutput(), ON); EXPECT_EQ(alu.getCarryOut(), ON);
+	EXPECT_EQ(alu.getPin(ALU_1bit::OUT), ON); EXPECT_EQ(alu.getPin(ALU_1bit::CARRY_OUT), ON);
 }

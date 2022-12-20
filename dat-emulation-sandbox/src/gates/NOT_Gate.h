@@ -3,17 +3,17 @@
 
 namespace dat
 {
-	class NOT_Gate : public Component<1, 1>
+	class NOT_Gate : public Component<2>
 	{
 	public:
 		static inline constexpr unsigned IN = 0;
 
-		static inline constexpr unsigned OUT = 0;
+		static inline constexpr unsigned OUT = 1;
 
 	public:
 		void process() override
 		{
-			setOutput(OUT, !(*this)[IN]);
+			setPin(OUT, !getPin(IN));
 		}
 	};
 }

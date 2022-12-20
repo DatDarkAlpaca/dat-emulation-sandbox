@@ -13,32 +13,40 @@ public:
 
 TEST_F(Gate_NAND_Test, Gate_NAND_Test_0_0)
 {
-	nandGate[0] = OFF; nandGate[1] = OFF;
+	using namespace dat;
+
+	nandGate[NAND_Gate::IN_0] = OFF; nandGate[NAND_Gate::IN_1] = OFF;
 	nandGate.process();
 
-	EXPECT_EQ(nandGate.output(), ON);
+	EXPECT_EQ(nandGate.getPin(NAND_Gate::OUT), ON);
 }
 
 TEST_F(Gate_NAND_Test, Gate_NAND_Test_0_1)
 {
-	nandGate[0] = OFF; nandGate[1] = ON;
+	using namespace dat;
+
+	nandGate[NAND_Gate::IN_0] = OFF; nandGate[NAND_Gate::IN_1] = ON;
 	nandGate.process();
 
-	EXPECT_EQ(nandGate.output(), ON);
+	EXPECT_EQ(nandGate.getPin(NAND_Gate::OUT), ON);
 }
 
 TEST_F(Gate_NAND_Test, Gate_NAND_Test_0_2)
 {
-	nandGate[0] = ON; nandGate[1] = OFF;
+	using namespace dat;
+
+	nandGate[NAND_Gate::IN_0] = ON; nandGate[NAND_Gate::IN_1] = OFF;
 	nandGate.process();
 
-	EXPECT_EQ(nandGate.output(), ON);
+	EXPECT_EQ(nandGate.getPin(NAND_Gate::OUT), ON);
 }
 
 TEST_F(Gate_NAND_Test, Gate_NAND_Test_0_3)
 {
-	nandGate[0] = ON; nandGate[1] = ON;
+	using namespace dat;
+
+	nandGate[NAND_Gate::IN_0] = ON; nandGate[NAND_Gate::IN_1] = ON;
 	nandGate.process();
 
-	EXPECT_EQ(nandGate.output(), OFF);
+	EXPECT_EQ(nandGate.getPin(NAND_Gate::OUT), OFF);
 }

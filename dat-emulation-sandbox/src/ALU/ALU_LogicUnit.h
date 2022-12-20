@@ -4,54 +4,41 @@
 
 namespace dat
 {
-	class ALU_LogicUnit : public Component<2, 3>
+	class ALU_LogicUnit : public Component<5>
 	{
 	public:
-		void setA(State value) { (*this)[0] = value; }
+		static inline constexpr unsigned A = 0;
 
-		void setB(State value) { (*this)[1] = value; }
+		static inline constexpr unsigned B = 1;
 
-	public:
-		State getA() const { return (*this)[0]; }
+		static inline constexpr unsigned NOT_OUT = 2;
 
-		State getB() const { return (*this)[1]; }
+		static inline constexpr unsigned OR_OUT = 3;
 
-	private:
-		void setNotOutput(State value) { setOutput(0, value); }
-
-		void setOrOutput(State value) { setOutput(1, value); }
-
-		void setAndOutput(State value) { setOutput(2, value); }
-
-	public:
-		State getNotOutput() const { return output(0); }
-
-		State getOrOutput() const { return output(1); }
-
-		State getAndOutput() const { return output(2); }
+		static inline constexpr unsigned AND_OUT = 4;
 
 	public:
 		void process() override
 		{
-			State A = getA();
-			State B = getB();
+			State valueA = getPin(A);
+			State valueB = getPin(B);
 
 			// Not:
-			notGate[0] = A;
+			notGate[0] = valueA;
 			notGate.process();
-			setNotOutput(notGate.output());
+			setPin(NOT_OUT, notGate.getPin(NOT_Gate::OUT));
 
 			// OR:
-			orGate[0] = A;
-			orGate[1] = B;
+			orGate[0] = valueA;
+			orGate[1] = valueB;
 			orGate.process();
-			setOrOutput(orGate.output());
+			setPin(OR_OUT, orGate.getPin(OR_Gate::OUT));
 
 			// AND:
-			andGate[0] = A;
-			andGate[1] = B;
+			andGate[0] = valueA;
+			andGate[1] = valueB;
 			andGate.process();
-			setAndOutput(andGate.output());
+			setPin(AND_OUT, andGate.getPin(AND_Gate::OUT));
 		}
 
 	private:

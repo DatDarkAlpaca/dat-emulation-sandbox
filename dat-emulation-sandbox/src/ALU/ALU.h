@@ -4,7 +4,7 @@
 
 namespace dat
 {
-	class ALU : public Component<19, 9>
+	/*class ALU : public Component<19 + 9>
 	{
 	public:
 		ALU()
@@ -27,9 +27,9 @@ namespace dat
 		void setCarryIn(State value) { (*this)[16 + 2] = value; }
 
 	public:
-		State getCarryOut() { return output(8); }
+		State getCarryOut() { return getPin(8); }
 
-		void setCarryOut(State value) { return setOutput(8, value); }
+		void setCarryOut(State value) { return setPin(8, value); }
 
 	public:
 		void setBitA(size_t index, State value)
@@ -82,7 +82,7 @@ namespace dat
 
 				alus[i].process();
 
-				setOutput(i, alus[i].getOutput());
+				setPin(i, alus[i].getOutput());
 			}				
 
 			setCarryOut(alus.back().getCarryOut());
@@ -111,7 +111,7 @@ namespace dat
 		{
 			uint8_t result = 0;
 			for (size_t i = 0; i < alus.size(); ++i)
-				result += output(i)* pow(2, i);
+				result += getPin(i)* pow(2, i);
 
 			return result;
 		}
@@ -119,5 +119,5 @@ namespace dat
 	public:
 		Decoder2_to_4 decoder;
 		std::array<ALU_1bit, 8> alus;
-	};
+	};*/
 }

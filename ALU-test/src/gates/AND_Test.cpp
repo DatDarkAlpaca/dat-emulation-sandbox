@@ -13,32 +13,44 @@ public:
 
 TEST_F(Gate_AND_Test, Gate_AND_Test_0)
 {
-	andGate[0] = OFF; andGate[1] = OFF;
+	using namespace dat;
+
+	andGate.pinOff(AND_Gate::IN_0);
+	andGate.pinOff(AND_Gate::IN_1);
 	andGate.process();
 
-	EXPECT_EQ(andGate.output(), OFF);
+	EXPECT_EQ(andGate.getPin(dat::AND_Gate::OUT), OFF);
 }
 
 TEST_F(Gate_AND_Test, Gate_AND_Test_1)
 {
-	andGate[0] = OFF; andGate[1] = ON;
+	using namespace dat;
+
+	andGate.pinOff(AND_Gate::IN_0);
+	andGate.pinOn(AND_Gate::IN_1);
 	andGate.process();
 
-	EXPECT_EQ(andGate.output(), OFF);
+	EXPECT_EQ(andGate.getPin(AND_Gate::OUT), OFF);
 }
 
 TEST_F(Gate_AND_Test, Gate_AND_Test_2)
 {
-	andGate[0] = ON; andGate[1] = OFF;
+	using namespace dat;
+
+	andGate.pinOn(AND_Gate::IN_0);
+	andGate.pinOff(AND_Gate::IN_1);
 	andGate.process();
 
-	EXPECT_EQ(andGate.output(), OFF);
+	EXPECT_EQ(andGate.getPin(AND_Gate::OUT), OFF);
 }
 
 TEST_F(Gate_AND_Test, Gate_AND_Test_3)
 {
-	andGate[0] = ON; andGate[1] = ON;
+	using namespace dat;
+
+	andGate.pinOn(AND_Gate::IN_0);
+	andGate.pinOn(AND_Gate::IN_1);
 	andGate.process();
 
-	EXPECT_EQ(andGate.output(), ON);
+	EXPECT_EQ(andGate.getPin(AND_Gate::OUT), ON);
 }

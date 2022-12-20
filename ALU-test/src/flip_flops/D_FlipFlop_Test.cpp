@@ -15,18 +15,24 @@ TEST_F(D_FlipFlop_Test, D_FlipFlop_Test_Latching)
 {
 	using namespace dat;
 
-	SET_PIN(dFlipFlop, D_FlipFlop::CLOCK, ON);
-	SET_PIN(dFlipFlop, D_FlipFlop::D, OFF);
+	dFlipFlop.pinOn(D_FlipFlop::CLOCK);
+	dFlipFlop.pinOff(D_FlipFlop::D);
 	dFlipFlop.process();
-	EXPECT_EQ(PIN_VAL(dFlipFlop, D_FlipFlop::Q), OFF); EXPECT_EQ(PIN_VAL(dFlipFlop, D_FlipFlop::Q_INV), ON);
-	
-	SET_PIN(dFlipFlop, D_FlipFlop::CLOCK, OFF);
-	SET_PIN(dFlipFlop, D_FlipFlop::D, ON);
-	dFlipFlop.process();
-	EXPECT_EQ(PIN_VAL(dFlipFlop, D_FlipFlop::Q), OFF); EXPECT_EQ(PIN_VAL(dFlipFlop, D_FlipFlop::Q_INV), ON);
 
-	SET_PIN(dFlipFlop, D_FlipFlop::CLOCK, ON);
-	SET_PIN(dFlipFlop, D_FlipFlop::D, ON);
+	EXPECT_EQ(dFlipFlop.getPin(D_FlipFlop::Q), OFF);
+	EXPECT_EQ(dFlipFlop.getPin(D_FlipFlop::Q_INV), ON);
+	
+	dFlipFlop.pinOff(D_FlipFlop::CLOCK);
+	dFlipFlop.pinOn(D_FlipFlop::D);
+
 	dFlipFlop.process();
-	EXPECT_EQ(PIN_VAL(dFlipFlop, D_FlipFlop::Q), ON); EXPECT_EQ(PIN_VAL(dFlipFlop, D_FlipFlop::Q_INV), OFF);
+	EXPECT_EQ(dFlipFlop.getPin(D_FlipFlop::Q), OFF);
+	EXPECT_EQ(dFlipFlop.getPin(D_FlipFlop::Q_INV), ON);
+
+	dFlipFlop.pinOn(D_FlipFlop::CLOCK);
+	dFlipFlop.pinOn(D_FlipFlop::D);
+
+	dFlipFlop.process();
+	EXPECT_EQ(dFlipFlop.getPin(D_FlipFlop::Q), ON);
+	EXPECT_EQ(dFlipFlop.getPin(D_FlipFlop::Q_INV), OFF);
 }

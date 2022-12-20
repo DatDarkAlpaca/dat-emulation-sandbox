@@ -6,38 +6,38 @@
 
 namespace dat
 {
-	class D_Latch : public Component<2, 2>
+	class D_Latch : public Component<4>
 	{
 	public:
 		static inline constexpr unsigned D = 0;
 
 		static inline constexpr unsigned ENABLE = 1;
 
-		static inline constexpr unsigned Q = 0;
+		static inline constexpr unsigned Q = 2;
 
-		static inline constexpr unsigned Q_INV = 1;
+		static inline constexpr unsigned Q_INV = 3;
 
 	public:
 		void process() override
 		{
-			notGate[0] = PIN_VAL((*this), D);
+			notGate[0] = getPin(D);
 			notGate.process();
 
-			andGates[0][0] = notGate.output();
-			andGates[0][1] = PIN_VAL((*this), ENABLE);
+			andGates[0][0] = notGate.getPin(NOT_Gate::OUT);
+			andGates[0][1] = getPin(ENABLE);
 			andGates[0].process();
 
-			andGates[1][0] = PIN_VAL((*this), ENABLE);
-			andGates[1][1] = PIN_VAL((*this), D);
+			andGates[1][0] = getPin(ENABLE);
+			andGates[1][1] = getPin(D);
 			andGates[1].process();
 
-			SET_PIN(srLatch, SR_Latch::R, andGates[0].output());
-			SET_PIN(srLatch, SR_Latch::S, andGates[1].output());
+			srLatch.setPin(SR_Latch::R, andGates[0].getPin(AND_Gate::OUT));
+			srLatch.setPin(SR_Latch::S, andGates[1].getPin(AND_Gate::OUT));
 			
 			srLatch.process();
 			
-			SET_PIN((*this), Q, PIN_VAL(srLatch, SR_Latch::Q));
-			SET_PIN((*this), Q_INV, PIN_VAL(srLatch, SR_Latch::Q_INV));
+			setPin(Q, srLatch.getPin(Q));
+			setPin(Q_INV, srLatch.getPin(Q_INV));
 		}
 
 	private:

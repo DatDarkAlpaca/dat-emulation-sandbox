@@ -3,7 +3,7 @@
 
 namespace
 {
-	using namespace dat;
+	/*using namespace dat;
 
 	class COMP_Full_Adder_Test : public testing::Test
 	{
@@ -104,5 +104,5 @@ namespace
 		fullAdder.process();
 
 		EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::SUM), ON); EXPECT_EQ(PIN_VAL(fullAdder, Full_Adder::CARRY_OUT), ON);
-	}
+	}*/
 }

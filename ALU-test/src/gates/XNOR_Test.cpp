@@ -13,32 +13,40 @@ public:
 
 TEST_F(Gate_XNOR_Test, Gate_XNOR_Test_0)
 {
+	using namespace dat;
+
 	xnorGate[0] = OFF; xnorGate[1] = OFF;
 	xnorGate.process();
 
-	EXPECT_EQ(xnorGate.output(), 1);
+	EXPECT_EQ(xnorGate.getPin(XNOR_Gate::OUT), ON);
 }
 
 TEST_F(Gate_XNOR_Test, Gate_XNOR_Test_1)
 {
+	using namespace dat;
+
 	xnorGate[0] = OFF; xnorGate[1] = ON;
 	xnorGate.process();
 
-	EXPECT_EQ(xnorGate.output(), 0);
+	EXPECT_EQ(xnorGate.getPin(XNOR_Gate::OUT), OFF);
 }
 
 TEST_F(Gate_XNOR_Test, Gate_XNOR_Test_2)
 {
+	using namespace dat;
+
 	xnorGate[0] = ON; xnorGate[1] = OFF;
 	xnorGate.process();
 
-	EXPECT_EQ(xnorGate.output(), 0);
+	EXPECT_EQ(xnorGate.getPin(XNOR_Gate::OUT), OFF);
 }
 
 TEST_F(Gate_XNOR_Test, Gate_XNOR_Test_3)
 {
+	using namespace dat;
+
 	xnorGate[0] = ON; xnorGate[1] = ON;
 	xnorGate.process();
 
-	EXPECT_EQ(xnorGate.output(), 1);
+	EXPECT_EQ(xnorGate.getPin(XNOR_Gate::OUT), ON);
 }

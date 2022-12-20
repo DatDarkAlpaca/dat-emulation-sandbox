@@ -8,35 +8,35 @@ public:
 	void TearDown() override { }
 
 public:
-	dat::TriStateBuffer buffer;
+	dat::TristateBuffer buffer;
 };
 
 TEST_F(Gate_TristateBuffer_Test, Gate_TristateBuffer_Test_0)
 {
 	using namespace dat;
 
-	SET_PIN(buffer, TriStateBuffer::ENABLE, OFF);
+	buffer.pinOff(TristateBuffer::ENABLE);
 
-	SET_PIN(buffer, TriStateBuffer::IN, ON);
+	buffer.pinOn(TristateBuffer::IN);
 	buffer.process();
-	EXPECT_EQ(buffer.output(), ZERO);
+	EXPECT_EQ(buffer.getPin(TristateBuffer::OUT), ZERO);
 
-	SET_PIN(buffer, TriStateBuffer::IN, ON);
+	buffer.pinOff(TristateBuffer::IN);
 	buffer.process();
-	EXPECT_EQ(buffer.output(), ZERO);
+	EXPECT_EQ(buffer.getPin(TristateBuffer::OUT), ZERO);
 }
 
 TEST_F(Gate_TristateBuffer_Test, Gate_TristateBuffer_Test_1)
 {
 	using namespace dat;
 
-	SET_PIN(buffer, TriStateBuffer::ENABLE, ON);
+	buffer.pinOn(TristateBuffer::ENABLE);
 
-	SET_PIN(buffer, TriStateBuffer::IN, ON);
+	buffer.pinOn(TristateBuffer::IN);
 	buffer.process();
-	EXPECT_EQ(buffer.output(), ON);
+	EXPECT_EQ(buffer.getPin(TristateBuffer::OUT), ON);
 
-	SET_PIN(buffer, TriStateBuffer::IN, OFF);
+	buffer.pinOff(TristateBuffer::IN);
 	buffer.process();
-	EXPECT_EQ(buffer.output(), OFF);
+	EXPECT_EQ(buffer.getPin(TristateBuffer::OUT), OFF);
 }

@@ -5,26 +5,27 @@
 
 namespace dat
 {
-	class Decoder2_to_4 : public Component<2, 4>
+	class Decoder2_to_4 : public Component<6>
 	{
 	public:
 		static inline constexpr unsigned F0 = 0;
 
 		static inline constexpr unsigned F1 = 1;
 
-		static inline constexpr unsigned OUT_0 = 0;
+		static inline constexpr unsigned OUT_0 = 2;
 
-		static inline constexpr unsigned OUT_1 = 1;
+		static inline constexpr unsigned OUT_1 = 3;
 
-		static inline constexpr unsigned OUT_2 = 2;
+		static inline constexpr unsigned OUT_2 = 4;
 
-		static inline constexpr unsigned OUT_3 = 3;
+		static inline constexpr unsigned OUT_3 = 5;
 
 	public:
 		void process() override
 		{
 			// Input Aliases:
-			State valueF0 = PIN_VAL((*this), F0), valueF1 = PIN_VAL((*this), F1);
+			State valueF0 = getPin(F0);
+			State valueF1 = getPin(F1);
 
 			// Gate Aliases:
 			auto& N = notGates;
@@ -33,16 +34,16 @@ namespace dat
 			// N0 - Orange:
 			N[0][0] = valueF0;
 			N[0].process();
-
-			A[0][0] = N[0].output();
-			A[2][0] = N[0].output();
+				
+			A[0][0] = N[0].getPin(NOT_Gate::OUT);
+			A[2][0] = N[0].getPin(NOT_Gate::OUT);
 
 			// N1 - green:
 			N[1][0] = valueF1;
 			N[1].process();
 
-			A[0][1] = N[1].output();
-			A[1][0] = N[1].output();
+			A[0][1] = N[1].getPin(NOT_Gate::OUT);
+			A[1][0] = N[1].getPin(NOT_Gate::OUT);
 
 			// F0:
 			A[1][1] = valueF0;
@@ -55,10 +56,10 @@ namespace dat
 			for (auto& gate : andGates)
 				gate.process();
 
-			setOutput(OUT_0, A[0].output());
-			setOutput(OUT_1, A[1].output());
-			setOutput(OUT_2, A[2].output());
-			setOutput(OUT_3, A[3].output());
+			setPin(OUT_0, A[0].getPin(AND_Gate::OUT));
+			setPin(OUT_1, A[1].getPin(AND_Gate::OUT));
+			setPin(OUT_2, A[2].getPin(AND_Gate::OUT));
+			setPin(OUT_3, A[3].getPin(AND_Gate::OUT));
 		}
 
 	private:

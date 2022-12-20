@@ -3,7 +3,7 @@
 
 namespace
 {
-	using namespace dat;
+	/*using namespace dat;
 
 	class COMP_Half_Adder_Test : public testing::Test
 	{
@@ -49,5 +49,5 @@ namespace
 		halfAdder.process();
 
 		EXPECT_EQ(PIN_VAL(halfAdder, Half_Adder::SUM), OFF); EXPECT_EQ(PIN_VAL(halfAdder, Half_Adder::CARRY_OUT), ON);
-	}
+	}*/
 }

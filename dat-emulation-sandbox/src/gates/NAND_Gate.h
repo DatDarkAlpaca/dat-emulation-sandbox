@@ -3,19 +3,19 @@
 
 namespace dat
 {
-	class NAND_Gate : public Component<2, 1>
+	class NAND_Gate : public Component<3>
 	{
 	public:
 		static inline constexpr unsigned IN_0 = 0;
 
 		static inline constexpr unsigned IN_1 = 1;
 
-		static inline constexpr unsigned OUT = 0;
+		static inline constexpr unsigned OUT = 2;
 
 	public:
 		void process() override
 		{
-			setOutput(OUT, !((*this)[IN_0] && (*this)[IN_1]));
+			setPin(OUT, !(getPin(IN_0) && getPin(IN_1)));
 		}
 	};
 }

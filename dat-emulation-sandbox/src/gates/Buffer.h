@@ -4,17 +4,17 @@
 
 namespace dat
 {
-	class Buffer : public Component<1, 1>
+	class Buffer : public Component<2>
 	{
 	public:
 		static inline constexpr unsigned IN = 0;
 
-		static inline constexpr unsigned OUT = 0;
+		static inline constexpr unsigned OUT = 1;
 
 	public:
 		void process() override
 		{
-			setOutput(OUT, PIN_VAL((*this), IN));
+			setPin(OUT, getPin(IN));
 		}
 	};
 }

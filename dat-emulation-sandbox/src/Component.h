@@ -4,62 +4,54 @@
 
 namespace dat
 {
-	template<size_t InputAmount, size_t OutputAmount>
+	template<size_t PinAmount>
 	class Component
 	{
 	public:
 		Component()
 		{
-			for (size_t i = 0; i < InputAmount; i++)
-				m_Inputs[i] = OFF;
-
-			for (size_t i = 0; i < OutputAmount; i++)
-				m_Outputs[i] = OFF;
+			for (size_t i = 0; i < PinAmount; i++)
+				m_Pins[i] = OFF;
 		}
 
 		virtual ~Component() = default;
 
 	public:
-		State operator[](size_t pinIndex) const
+		State operator[](size_t pin) const
 		{
-			return m_Inputs[pinIndex];
+			return m_Pins[pin];
 		}
 
-		State& operator[](size_t pinIndex)
+		State& operator[](size_t pin)
 		{
-			return m_Inputs[pinIndex];
+			return m_Pins[pin];
 		}
 
-		void setOutput(size_t pinIndex = 0, State value = 0)
+	public:
+		void setPin(size_t pin, State value)
 		{
-			m_Outputs[pinIndex] = value;
+			m_Pins[pin] = value;
 		}
 
-		State output(size_t pinIndex = 0) const
+		State getPin(size_t pin) const
 		{
-			return m_Outputs[pinIndex];
+			return (*this)[pin];
+		}
+
+		void pinOn(size_t pin)
+		{
+			m_Pins[pin] = ON;
+		}
+
+		void pinOff(size_t pin)
+		{
+			m_Pins[pin] = OFF;
 		}
 
 	public:
 		virtual void process() { }
 
-	private:
-		std::array<State, InputAmount> m_Inputs;
-		std::array<State, OutputAmount> m_Outputs;
+	public:
+		std::array<State, PinAmount> m_Pins;
 	};
-
-	#define SET_PIN(DEVICE, PIN, VALUE) \
-	DEVICE[PIN] = VALUE
-
-	#define PIN_OFF(DEVICE, PIN)	\
-	DEVICE[PIN] = dat::State::OFF_STATE
-
-	#define PIN_ON(DEVICE, PIN)	\
-	DEVICE[PIN] = dat::State::ON_STATE
-
-	#define PIN_VAL(DEVICE, PIN)	\
-	DEVICE[PIN]
-
-	#define PIN_STR(DEVICE, PIN)	\
-	getString(DEVICE[PIN])
 }

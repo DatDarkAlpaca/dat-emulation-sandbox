@@ -13,14 +13,20 @@ public:
 
 TEST_F(Gate_Buffer_Test, Gate_Buffer_Test_0)
 {
-	SET_PIN(buffer, dat::Buffer::IN, ON);
+	using namespace dat;
+
+	buffer.setPin(Buffer::IN, ON);
 	buffer.process();
-	EXPECT_EQ(buffer.output(), ON);
+
+	EXPECT_EQ(buffer.getPin(Buffer::OUT), ON);
 }
 
 TEST_F(Gate_Buffer_Test, Gate_Buffer_Test_1)
 {
-	SET_PIN(buffer, dat::Buffer::IN, OFF);
+	using namespace dat;
+
+	buffer.setPin(Buffer::IN, OFF);
 	buffer.process();
-	EXPECT_EQ(buffer.output(), OFF);
+
+	EXPECT_EQ(buffer.getPin(Buffer::OUT), OFF);
 }

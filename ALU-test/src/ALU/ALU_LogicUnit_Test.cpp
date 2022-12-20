@@ -14,32 +14,50 @@ public:
 
 TEST_F(ALU_LogicUnit_Test, ALU_LogicUnit_Test_0)
 {
-	LU.setA(OFF); LU.setB(OFF);
+	using namespace dat;
+
+	LU.pinOff(ALU_LogicUnit::A); 
+	LU.pinOff(ALU_LogicUnit::B);
 	LU.process();
 
-	EXPECT_EQ(LU.output(OFF), ON); EXPECT_EQ(LU.output(ON), OFF); EXPECT_EQ(LU.output(2), OFF);
+	LU.getPin(ALU_LogicUnit::NOT_OUT);
+	EXPECT_EQ(LU.getPin(ALU_LogicUnit::NOT_OUT), ON); 
+	EXPECT_EQ(LU.getPin(ALU_LogicUnit::OR_OUT), OFF); 
+	EXPECT_EQ(LU.getPin(ALU_LogicUnit::AND_OUT), OFF);
 }
 
 TEST_F(ALU_LogicUnit_Test, ALU_LogicUnit_Test_1)
 {
-	LU.setA(OFF); LU.setB(ON);
+	using namespace dat;
+
+	LU.pinOff(ALU_LogicUnit::A); LU.pinOn(ALU_LogicUnit::B);
 	LU.process();
 
-	EXPECT_EQ(LU.output(OFF), ON); EXPECT_EQ(LU.output(ON), ON); EXPECT_EQ(LU.output(2), OFF);
+	EXPECT_EQ(LU.getPin(ALU_LogicUnit::NOT_OUT), ON);
+	EXPECT_EQ(LU.getPin(ALU_LogicUnit::OR_OUT), ON);
+	EXPECT_EQ(LU.getPin(ALU_LogicUnit::AND_OUT), OFF);
 }
 
 TEST_F(ALU_LogicUnit_Test, ALU_LogicUnit_Test_2)
 {
-	LU.setA(ON); LU.setB(OFF);
+	using namespace dat;
+
+	LU.pinOn(ALU_LogicUnit::A); LU.pinOff(ALU_LogicUnit::B);
 	LU.process();
 
-	EXPECT_EQ(LU.output(OFF), OFF); EXPECT_EQ(LU.output(ON), ON); EXPECT_EQ(LU.output(2), OFF);
+	EXPECT_EQ(LU.getPin(ALU_LogicUnit::NOT_OUT), OFF);
+	EXPECT_EQ(LU.getPin(ALU_LogicUnit::OR_OUT), ON);
+	EXPECT_EQ(LU.getPin(ALU_LogicUnit::AND_OUT), OFF);
 }
 
 TEST_F(ALU_LogicUnit_Test, ALU_LogicUnit_Test_3)
 {
-	LU.setA(ON); LU.setB(ON);
+	using namespace dat;
+
+	LU.pinOn(ALU_LogicUnit::A); LU.pinOn(ALU_LogicUnit::B);
 	LU.process();
 
-	EXPECT_EQ(LU.output(OFF), OFF); EXPECT_EQ(LU.output(ON), ON); EXPECT_EQ(LU.output(2), ON);
+	EXPECT_EQ(LU.getPin(ALU_LogicUnit::NOT_OUT), OFF);
+	EXPECT_EQ(LU.getPin(ALU_LogicUnit::OR_OUT), ON);
+	EXPECT_EQ(LU.getPin(ALU_LogicUnit::AND_OUT), ON);
 }

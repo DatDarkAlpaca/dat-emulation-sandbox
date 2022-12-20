@@ -8,8 +8,23 @@
 
 namespace dat
 {
-	class ALU_1bit : public Component<5, 2>
+	class ALU_1bit : public Component<7>
 	{
+	public:
+		static inline constexpr unsigned A = 0;
+
+		static inline constexpr unsigned B = 1;
+
+		static inline constexpr unsigned CARRY_IN = 2;
+
+		static inline constexpr unsigned F0 = 3;
+
+		static inline constexpr unsigned F1 = 4;
+
+		static inline constexpr unsigned OUT = 5;
+
+		static inline constexpr unsigned CARRY_OUT = 6;
+
 	public:
 		ALU_1bit(Decoder2_to_4* decoder)
 			: decoder(decoder)
@@ -25,57 +40,35 @@ namespace dat
 		}
 
 	public:
-		void setA(State value) { (*this)[0] = value; }
-
-		void setB(State value) { (*this)[1] = value; }
-
-		void setCarryIn(State value) { (*this)[2] = value; }
-
-		void setF0(State value) { (*this)[3] = value; }
-
-		void setF1(State value) { (*this)[4] = value; }
-
-	public:
-		State getA() const { return (*this)[0]; }
-
-		State getB() const { return (*this)[1]; }
-
-		State getCarryIn() const { return (*this)[2]; }
-
-		State getF0() const { return (*this)[3]; }
-
-		State getF1() const { return (*this)[4]; }
-
-	public:
 		void process() override
 		{
 			// Decoder Input:
-			SET_PIN((*decoder), Decoder2_to_4::F0, getF0());
-			SET_PIN((*decoder), Decoder2_to_4::F1, getF1());
+			decoder->setPin(Decoder2_to_4::F0, getPin(F0));
+			decoder->setPin(Decoder2_to_4::F1, getPin(F1));
 			decoder->process();
 
 			// LU Input:
-			logicUnit.setA(getA());
-			logicUnit.setB(getB());
+			logicUnit.setPin(A, getPin(A));
+			logicUnit.setPin(B, getPin(B));
 			logicUnit.process();
 
 			// FA Input:
-			SET_PIN(fullAdder, Full_Adder::A, getA());
-			SET_PIN(fullAdder, Full_Adder::B, getB());
-			SET_PIN(fullAdder, Full_Adder::CARRY_IN, getCarryIn());
+			fullAdder.setPin(Full_Adder::A, getPin(A));
+			fullAdder.setPin(Full_Adder::B, getPin(B));
+			fullAdder.setPin(Full_Adder::CARRY_IN, getPin(CARRY_IN));
 			fullAdder.process();
 
-			setOutput(1, PIN_VAL(fullAdder, Full_Adder::CARRY_OUT));	// Carry Out
+			setPin(CARRY_OUT, fullAdder.getPin(Full_Adder::CARRY_OUT));
 
 			// Inputs:
-			State I0 = logicUnit.getNotOutput();
-			State I1 = decoder->output(0);
-			State I2 = logicUnit.getOrOutput();
-			State I3 = decoder->output(1);
-			State I4 = logicUnit.getAndOutput();
-			State I5 = decoder->output(2);
-			State I6 = decoder->output(3);
-			State I7 = PIN_VAL(fullAdder, Full_Adder::SUM);
+			State I0 = logicUnit[ALU_LogicUnit::NOT_OUT];
+			State I1 = (*decoder)[Decoder2_to_4::OUT_0];
+			State I2 = logicUnit[ALU_LogicUnit::OR_OUT];
+			State I3 = (*decoder)[Decoder2_to_4::OUT_1];
+			State I4 = logicUnit[ALU_LogicUnit::AND_OUT];
+			State I5 = (*decoder)[Decoder2_to_4::OUT_2];
+			State I6 = (*decoder)[Decoder2_to_4::OUT_3];
+			State I7 = fullAdder.getPin(Full_Adder::SUM);
 
 			// Aliases:
 			auto& A = andGates;
@@ -97,19 +90,14 @@ namespace dat
 				andGate.process();
 
 			// Xor Gate Output:
-			outGate[0] = A[0].output();
-			outGate[1] = A[1].output();
-			outGate[2] = A[2].output();
-			outGate[3] = A[3].output();
+			outGate[0] = A[0].getPin(AND_Gate::OUT);
+			outGate[1] = A[1].getPin(AND_Gate::OUT);
+			outGate[2] = A[2].getPin(AND_Gate::OUT);
+			outGate[3] = A[3].getPin(AND_Gate::OUT);
 
 			outGate.process();
-			setOutput(0, outGate.output());			// Output
+			setPin(OUT, outGate.getPin(XOR_Gate_4IN::OUT));
 		}
-
-	public:
-		State getOutput() const { return output(); }
-
-		State getCarryOut() const { return output(1); }
 
 	private:
 		std::array<AND_Gate, 4> andGates;

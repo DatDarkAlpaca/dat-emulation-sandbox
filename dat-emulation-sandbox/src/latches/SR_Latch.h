@@ -5,16 +5,16 @@
 
 namespace dat
 {
-	class SR_Latch : public Component<2, 2>
+	class SR_Latch : public Component<4>
 	{
 	public:
 		static inline constexpr unsigned R = 0;
 
 		static inline constexpr unsigned S = 1;
 
-		static inline constexpr unsigned Q = 0;
+		static inline constexpr unsigned Q = 2;
 
-		static inline constexpr unsigned Q_INV = 1;
+		static inline constexpr unsigned Q_INV = 3;
 
 	public:
 		SR_Latch()
@@ -26,18 +26,18 @@ namespace dat
 	public:
 		void process() override
 		{
-			norGates[0][0] = PIN_VAL((*this), R);
+			norGates[0][0] = getPin(R);
 			norGates[0].process();
 
-			norGates[1][0] = norGates[0].output();
-			norGates[1][1] = PIN_VAL((*this), S);
+			norGates[1][0] = norGates[0].getPin(NOR_Gate::OUT);
+			norGates[1][1] = getPin(S);
 			norGates[1].process();
 
-			norGates[0][1] = norGates[1].output();
+			norGates[0][1] = norGates[1].getPin(NOR_Gate::OUT);
 			norGates[0].process();
 
-			SET_PIN((*this), Q, norGates[0].output());
-			SET_PIN((*this), Q_INV, norGates[1].output());
+			setPin(Q, norGates[0].getPin(NOR_Gate::OUT));
+			setPin(Q_INV, norGates[1].getPin(NOR_Gate::OUT));
 		}
 
 	private:

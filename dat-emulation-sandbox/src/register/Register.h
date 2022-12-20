@@ -7,7 +7,7 @@
 
 namespace dat
 {
-	class Register : public Component<REGISTER_BIT_SIZE + 3, REGISTER_BIT_SIZE>
+	/*class Register : public Component<REGISTER_BIT_SIZE + 3, REGISTER_BIT_SIZE>
 	{
 	public:
 		Register()
@@ -69,5 +69,5 @@ namespace dat
 
 	public:
 		std::array<Register_1bit, REGISTER_BIT_SIZE> registers;
-	};
+	};*/
 }

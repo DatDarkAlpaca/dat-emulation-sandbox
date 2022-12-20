@@ -3,22 +3,22 @@
 
 namespace dat
 {
-	class TriStateBuffer : public Component<2, 1>
+	class TristateBuffer : public Component<3>
 	{
 	public:
 		static inline constexpr unsigned IN = 0;
 
 		static inline constexpr unsigned ENABLE = 1;
 
-		static inline constexpr unsigned OUT = 0;
+		static inline constexpr unsigned OUT = 2;
 
 	public:
 		void process() override
 		{
-			if (!PIN_VAL((*this), ENABLE))
-				setOutput(0, ZERO);
+			if (!getPin(ENABLE))
+				setPin(OUT, ZERO);
 			else
-				setOutput(0, PIN_VAL((*this), IN));
+				setPin(OUT, getPin(IN));
 		}
 	};
 }
