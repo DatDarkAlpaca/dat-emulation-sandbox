@@ -61,7 +61,7 @@ namespace dat
 		}
 
 	public:
-		void setNumber(int number)
+		void setNumber(uint8_t number)
 		{
 			for (int i = 0; i < 8; ++i)
 			{

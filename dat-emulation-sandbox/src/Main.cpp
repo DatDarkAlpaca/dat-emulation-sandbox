@@ -53,7 +53,7 @@ int main()
 			int number;
 			std::cout << "> ";
 			std::cin >> number;
-			registerCI.setNumber(number);
+			registerCI.setNumber((uint8_t)number);
 		}
 
 		registerCI.setClock(clock.output());
