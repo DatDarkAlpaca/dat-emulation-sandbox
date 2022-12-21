@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include <numeric>
 #include "Component.h"
 #include "Register_1bit.h"
 
@@ -7,67 +8,105 @@
 
 namespace dat
 {
-	/*class Register : public Component<REGISTER_BIT_SIZE + 3, REGISTER_BIT_SIZE>
+	class Register : public Component<3 + 2 * REGISTER_BIT_SIZE>
 	{
+	public:
+		static inline constexpr unsigned DATA[REGISTER_BIT_SIZE] = {
+			0, 1, 2, 3, 4, 5, 6, 7
+		};
+
+		static inline constexpr unsigned OUT[REGISTER_BIT_SIZE] = {
+			8, 9, 10, 11, 12, 13, 14, 15
+		};
+
+		static inline constexpr unsigned LOAD = 16;
+
+		static inline constexpr unsigned CLK = 17;
+
+		static inline constexpr unsigned ENABLE = 18;
+
 	public:
 		Register()
 		{
-			setLoad(OFF);
-			setEnable(OFF);
+			for (size_t i = 0; i < 8; ++i)
+			{
+				pinOff(DATA[i]);
+				setPin(OUT[i], ZERO);
+			}
 		}
 
 	public:
-		State getData(size_t index) const 
-		{ 
-			if (index > REGISTER_BIT_SIZE - 1)
-				throw "Invalid register data pin";
-
-			return (*this)[index]; 
-		}
-
-		void setData(size_t index, State value) 
+		void setClock(State clockOutput)
 		{
-			if (index > REGISTER_BIT_SIZE - 1)
-				throw "Invalid register data pin";
-
-			(*this)[index] = value; 
+			setPin(CLK, clockOutput);
+			
+			for(size_t i = 0; i < REGISTER_BIT_SIZE; ++i)
+				registers[i].setPin(Register_1bit::CLK, getPin(CLK));
 		}
 
-		State getLoad() const { return (*this)[REGISTER_BIT_SIZE]; }
+		void setEnable(State clockOutput)
+		{
+			setPin(ENABLE, clockOutput);
 
-		void setLoad(State value) { (*this)[REGISTER_BIT_SIZE] = value; }
+			for (size_t i = 0; i < REGISTER_BIT_SIZE; ++i)
+				registers[i].setPin(Register_1bit::ENABLE, getPin(ENABLE));
+		}
 
-		State getClock() const { return (*this)[REGISTER_BIT_SIZE + 1]; }
+		void setLoad(State clockOutput)
+		{
+			setPin(LOAD, clockOutput);
 
-		void setClock(State value) { (*this)[REGISTER_BIT_SIZE + 1] = value; }
+			for (size_t i = 0; i < REGISTER_BIT_SIZE; ++i)
+				registers[i].setPin(Register_1bit::LOAD, getPin(LOAD));
+		}
 
-		State getEnable() const { return (*this)[REGISTER_BIT_SIZE + 2]; }
+	public:
+		void setNumber(int number)
+		{
+			for (int i = 0; i < 8; ++i)
+			{
+				int bit = (number & (1 << i)) >> i;	
+				setPin(DATA[i], bit ? State::ON_STATE : State::OFF_STATE);
+				registers[i].setPin(Register_1bit::D, getPin(DATA[i]));
+			}
+		}
 
-		void setEnable(State value) { (*this)[REGISTER_BIT_SIZE + 2] = value; }
+		int getNumber() const
+		{
+			for (size_t i = 0; i < 8; ++i)
+			{
+				if (getPin(OUT[i]) == ZERO)
+					return -1;
+			}
+
+			int result = 0;
+			for (int i = 0; i < REGISTER_BIT_SIZE; ++i)
+			{
+				int pin = getPin(OUT[i]) == OFF ? 0 : 1;
+				result += pow(2, i) * pin;
+			}
+			
+			return result;
+		}
 
 	public:
 		void process() override
 		{
-			if (!getEnable())
+			if (!getPin(ENABLE))
 			{
 				for (size_t i = 0; i < REGISTER_BIT_SIZE; ++i)
-					setOutput(i, ZERO);
+					setPin(OUT[i], ZERO);
+				return;
 			}
 
 			for (size_t i = 0; i < REGISTER_BIT_SIZE; ++i)
 			{
-				SET_PIN(registers[i], Register_1bit::CLK, getClock());
-				SET_PIN(registers[i], Register_1bit::LOAD, getLoad());
-				SET_PIN(registers[i], Register_1bit::ENABLE, getEnable());
-				SET_PIN(registers[i], Register_1bit::D1, getData(i));
-
 				registers[i].process();
-
-				setOutput(i, registers[i].output());
+				setPin(OUT[i], registers[i].getPin(Register_1bit::OUT));
 			}
 		}
 
 	public:
 		std::array<Register_1bit, REGISTER_BIT_SIZE> registers;
-	};*/
+	};
 }
