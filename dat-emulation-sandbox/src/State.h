@@ -2,7 +2,7 @@
 
 namespace dat
 {
-	enum State
+	enum State : int8_t
 	{
 		ZERO_STATE = -1,
 		OFF_STATE  = false,
