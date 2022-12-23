@@ -29,23 +29,49 @@ int main()
 {
 	using namespace dat;
 
-	SR_Latch latch;
-	std::cout << getString(latch.getPin(SR_Latch::Q)) << ' ' << getString(latch.getPin(SR_Latch::Q_INV)) << '\n';
+	AstableClock clock(200);
+	EdgeDetector edge;
+	SR_E_Latch gate;
 
-	latch[SR_Latch::R] = ON;
-	latch[SR_Latch::S] = ON;
-	latch.process();
-	std::cout << getString(latch.getPin(SR_Latch::Q)) << ' ' << getString(latch.getPin(SR_Latch::Q_INV)) << '\n';
+	gate[SR_E_Latch::R] = OFF;
+	gate[SR_E_Latch::S] = OFF;
+	gate[SR_E_Latch::E] = OFF;
+
+	while (true)
+	{
+		clock.push();
+
+		int a = getchNonBlock();
+
+		 if (a) std::cout << a << '\n';
+
+		if (a == 99) // C - Clear
+		{
+			gate[SR_E_Latch::R] = OFF;
+			gate[SR_E_Latch::S] = OFF;
+		}
+
+		if (a == 118) // V - ON
+		{
+			gate[SR_E_Latch::R] = ON;
+			gate[SR_E_Latch::S] = ON;
+		}
+
+		if (a == 101) // E - Switch ENABLE
+		{
+			gate[SR_E_Latch::R] = gate[SR_E_Latch::S];
+			gate[SR_E_Latch::S] = !gate[SR_E_Latch::R];
+
+			std::cout << "S: " << getString(gate[SR_E_Latch::S]) << ' ' << " | R: " << getString(gate[SR_E_Latch::R]) << '\n';
+		}
 	
-	latch[SR_Latch::R] = OFF;
-	latch[SR_Latch::S] = ON;
-	latch.process();
-	std::cout << getString(latch.getPin(SR_Latch::Q)) << ' ' << getString(latch.getPin(SR_Latch::Q_INV)) << '\n';
+		gate[SR_E_Latch::E] = clock.output();
 
-	latch[SR_Latch::R] = ON;
-	latch[SR_Latch::S] = OFF;
-	latch.process();
-	std::cout << getString(latch.getPin(SR_Latch::Q)) << ' ' << getString(latch.getPin(SR_Latch::Q_INV)) << '\n';
+		edge.detectPositive(clock.output(), [&]() {
+			gate.process();
+			std::cout << getString(gate[SR_E_Latch::Q]) << '\n';
+		});
+	}
 }
 
 int _main()
