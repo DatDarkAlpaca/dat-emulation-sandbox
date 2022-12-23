@@ -105,7 +105,10 @@
     <ClInclude Include="src\flip_flops\MS_JK_FlipFlop.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gates\NAND_Gate_4IN.h">
+    <ClInclude Include="src\gates\NAND_Gate_3IN.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\latches\SR_E_Latch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

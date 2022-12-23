@@ -3,7 +3,7 @@
 
 namespace dat
 {
-	class NAND_Gate_4IN : public Component<3>
+	class NAND_Gate_3IN : public Component<4>
 	{
 	public:
 		static inline constexpr unsigned IN_0 = 0;

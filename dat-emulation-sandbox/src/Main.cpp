@@ -1,6 +1,9 @@
 #include <iostream>
 #include <conio.h>
 #include "Clock.h"
+#include "flip_flops/JK_FlipFlop.h"
+#include "flip_flops/D_FlipFlop.h"
+#include "latches/SR_E_Latch.h"
 #include "register/Register.h"
 
 int getchNonBlock()
@@ -10,7 +13,42 @@ int getchNonBlock()
 	return 0;
 }
 
+void print(dat::JK_FlipFlop jk)
+{
+	using namespace dat;
+
+	std::cout << "J: " << getString(jk[JK_FlipFlop::J]) << '\n';
+	std::cout << "K: " << getString(jk[JK_FlipFlop::K]) << '\n';
+	std::cout << "clk: " << getString(jk[JK_FlipFlop::CLOCK]) << '\n';
+	std::cout << "Q | Q_INV: " << getString(jk[JK_FlipFlop::Q]) << " | ";
+	std::cout << getString(jk[JK_FlipFlop::Q_INV]) << '\n';
+	std::cout << '\n';
+}
+
 int main()
+{
+	using namespace dat;
+
+	SR_Latch latch;
+	std::cout << getString(latch.getPin(SR_Latch::Q)) << ' ' << getString(latch.getPin(SR_Latch::Q_INV)) << '\n';
+
+	latch[SR_Latch::R] = ON;
+	latch[SR_Latch::S] = ON;
+	latch.process();
+	std::cout << getString(latch.getPin(SR_Latch::Q)) << ' ' << getString(latch.getPin(SR_Latch::Q_INV)) << '\n';
+	
+	latch[SR_Latch::R] = OFF;
+	latch[SR_Latch::S] = ON;
+	latch.process();
+	std::cout << getString(latch.getPin(SR_Latch::Q)) << ' ' << getString(latch.getPin(SR_Latch::Q_INV)) << '\n';
+
+	latch[SR_Latch::R] = ON;
+	latch[SR_Latch::S] = OFF;
+	latch.process();
+	std::cout << getString(latch.getPin(SR_Latch::Q)) << ' ' << getString(latch.getPin(SR_Latch::Q_INV)) << '\n';
+}
+
+int _main()
 {
 	using namespace dat;
 

@@ -19,28 +19,47 @@ namespace dat
 	public:
 		SR_Latch()
 		{
-			// Q initially open:
-			norGates[0][1] = OFF;
+			pinOn(Q);
 		}
 
 	public:
 		void process() override
 		{
-			norGates[0][0] = getPin(R);
-			norGates[0].process();
+			auto s = getPin(S);
+			auto r = getPin(R);
+			auto q = getPin(Q);
+			auto q_ = getPin(Q_INV);
 
-			norGates[1][0] = norGates[0].getPin(NOR_Gate::OUT);
-			norGates[1][1] = getPin(S);
-			norGates[1].process();
+			if (!s && !r) { }
 
-			norGates[0][1] = norGates[1].getPin(NOR_Gate::OUT);
-			norGates[0].process();
+			if (s && q_)
+			{
+				pinOn(Q);
+				pinOff(Q_INV);
+			}
 
-			setPin(Q, norGates[0].getPin(NOR_Gate::OUT));
-			setPin(Q_INV, norGates[1].getPin(NOR_Gate::OUT));
+			if (r && q)
+			{
+				pinOn(Q_INV);
+				pinOff(Q);
+			}
+
+			if (r && s)
+			{
+				invalidState = true;
+				pinOff(Q);
+				pinOff(Q_INV);
+			}
+
+			if (!r || !s && invalidState)
+			{
+				pinOn(Q);
+				pinOff(Q_INV);
+				invalidState = false;
+			}
 		}
 
 	private:
-		std::array<NOR_Gate, 2> norGates;
+		bool invalidState = false;
 	};
 }
