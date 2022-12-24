@@ -63,6 +63,7 @@
     <ClCompile Include="src\components\FullAdder_Test.cpp" />
     <ClCompile Include="src\components\HalfAdder_Test.cpp" />
     <ClCompile Include="src\flip_flops\D_FlipFlop_Test.cpp" />
+    <ClCompile Include="src\flip_flops\JK_FlipFlop_Test.cpp" />
     <ClCompile Include="src\gates\AND_Test.cpp" />
     <ClCompile Include="src\gates\Buffer_Test.cpp" />
     <ClCompile Include="src\gates\NAND_Test.cpp" />
@@ -81,9 +82,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\register\Register_1bit_Test.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\dat-emulation-sandbox\dat-emulation-sandbox.vcxproj">

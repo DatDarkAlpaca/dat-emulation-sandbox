@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ALU\ALU.h" />
@@ -170,6 +171,11 @@
     <ClInclude Include="src\components\Half_Adder.h" />
     <ClInclude Include="src\ALU\ALU_LogicUnit.h" />
     <ClInclude Include="src\Component.h" />
+    <ClInclude Include="src\flip_flops\JK_FlipFlop.h" />
+    <ClInclude Include="src\flip_flops\MS_JK_FlipFlop.h" />
+    <ClInclude Include="src\gates\AND_Gate_3IN.h" />
+    <ClInclude Include="src\gates\NAND_Gate_3IN.h" />
+    <ClInclude Include="src\latches\SR_E_Latch.h" />
     <ClInclude Include="src\register\Register_1bit.h" />
     <ClInclude Include="src\flip_flops\D_FlipFlop.h" />
     <ClInclude Include="src\gates\AND_Gate.h" />
