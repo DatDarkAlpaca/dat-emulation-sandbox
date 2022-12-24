@@ -2,6 +2,7 @@
 #include <array>
 #include "Component.h"
 #include "gates/Gates.h"
+#include "SR_Latch.h"
 
 namespace dat
 {

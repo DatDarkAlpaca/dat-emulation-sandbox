@@ -1,7 +1,7 @@
 #pragma once
 #include <array>
 #include "Component.h"
-#include "latches/SR_Latch.h"
+#include "latches/SR_E_Latch.h"
 #include "gates/Gates.h"
 
 namespace dat
@@ -22,44 +22,33 @@ namespace dat
 	public:
 		JK_FlipFlop()
 		{
-			nandGateIn[0][NAND_Gate_3IN::IN_0] = OFF;
-			nandGateIn[1][NAND_Gate_3IN::IN_2] = ON;
+			pinOn(Q);
 			process();
 		}
 
 	public:
 		void process() override
 		{
-			//nandGateIn[0][NAND_Gate_4IN::IN_0] = default;
-			nandGateIn[0][NAND_Gate_3IN::IN_1] = getPin(J);
-			nandGateIn[0][NAND_Gate_3IN::IN_2] = getPin(CLOCK);
-			nandGateIn[0].process();
+			andGates[0][0] = getPin(Q);
+			andGates[0][1] = getPin(K);
+			andGates[0][2] = getPin(CLOCK);
+			andGates[0].process();
 
-			nandGateIn[1][NAND_Gate_3IN::IN_0] = getPin(CLOCK);
-			nandGateIn[1][NAND_Gate_3IN::IN_1] = getPin(K);
-			//nandGateIn[1][NAND_Gate_4IN::IN_2] = default;
-			nandGateIn[1].process();
+			andGates[1][0] = getPin(CLOCK);
+			andGates[1][1] = getPin(J);
+			andGates[1][2] = getPin(Q_INV);
+			andGates[1].process();
 
-			nandGateOut[0][NAND_Gate::IN_0] = nandGateIn[0][NAND_Gate_3IN::OUT];
-			nandGateOut[0][NAND_Gate::IN_1] = nandGateOut[1][NAND_Gate::OUT];
-			nandGateOut[0].process();
-			
-			nandGateOut[1][NAND_Gate::IN_0] = nandGateOut[0][NAND_Gate::OUT];
-			nandGateOut[1][NAND_Gate::IN_1] = nandGateIn[1][NAND_Gate_3IN::OUT];
-			nandGateOut[1].process();
+			latch[SR_Latch::R] = andGates[0][AND_Gate_3IN::OUT];
+			latch[SR_Latch::S] = andGates[1][AND_Gate_3IN::OUT];
+			latch.process();
 
-			nandGateOut[0][NAND_Gate::IN_1] = nandGateOut[1][NAND_Gate::OUT];
-			nandGateOut[1][NAND_Gate::IN_0] = nandGateOut[0][NAND_Gate::OUT];
-
-			setPin(Q, nandGateOut[0][NAND_Gate::OUT]);
-			setPin(Q_INV, nandGateOut[1][NAND_Gate::OUT]);
-
-			nandGateIn[0][NAND_Gate_3IN::IN_0] = nandGateIn[1][NAND_Gate::OUT];
-			nandGateIn[1][NAND_Gate_3IN::IN_2] = nandGateIn[0][NAND_Gate::OUT];
+			setPin(Q, latch[SR_Latch::Q]);
+			setPin(Q_INV, latch[SR_Latch::Q_INV]);
 		}
 
 	private:
-		std::array<NAND_Gate_3IN, 2> nandGateIn;
-		std::array<NAND_Gate, 2> nandGateOut;
+		std::array<AND_Gate_3IN, 2> andGates;
+		SR_Latch latch;
 	};
 }
