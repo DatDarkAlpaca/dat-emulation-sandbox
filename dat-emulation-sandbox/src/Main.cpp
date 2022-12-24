@@ -1,7 +1,7 @@
 #include <iostream>
 #include <conio.h>
 #include "Clock.h"
-#include "flip_flops/JK_FlipFlop.h"
+#include "flip_flops/MS_JK_FlipFlop.h"
 #include "flip_flops/D_FlipFlop.h"
 #include "latches/SR_E_Latch.h"
 #include "register/Register.h"
@@ -26,6 +26,50 @@ void print(dat::JK_FlipFlop jk)
 }
 
 int main()
+{
+	using namespace dat;
+
+	AstableClock clock(200);
+	EdgeDetector edge;
+	MS_JK_FlipFlop gate;
+
+	gate[MS_JK_FlipFlop::J]     = OFF;
+	gate[MS_JK_FlipFlop::K]     = OFF;
+	gate[MS_JK_FlipFlop::CLOCK] = OFF;
+	gate.process();
+
+	while (true)
+	{
+		clock.push();
+		int a = getchNonBlock();
+
+		/* if (a) 
+			std::cout << a << '\n'; */
+
+		if (a == 49) // 1 - Clear
+		{
+			gate[MS_JK_FlipFlop::J] = ON;
+			gate[MS_JK_FlipFlop::K] = OFF;
+			std::cout << "J ON\n";
+		}
+
+		if (a == 48) // 0 - Clear
+		{
+			gate[MS_JK_FlipFlop::J] = OFF;
+			gate[MS_JK_FlipFlop::K] = ON;
+			std::cout << "J OFF\n";
+		}
+
+		gate[MS_JK_FlipFlop::CLOCK] = clock.output();
+
+		gate.process();
+		edge.detectPositive(clock.output(), [&]() {
+			std::cout << "Q: " << getString(gate[MS_JK_FlipFlop::Q]) << ' ' << " | !Q: " << getString(gate[MS_JK_FlipFlop::Q_INV]) << '\n';
+		});
+	}
+}
+
+int jk_main()
 {
 	using namespace dat;
 
@@ -72,7 +116,6 @@ int main()
 	
 		gate[JK_FlipFlop::CLOCK] = clock.output();
 		
-
 		edge.detectPositive(clock.output(), [&]() {
 			gate.process();
 			std::cout << "Q: " << getString(gate[JK_FlipFlop::Q]) << ' ' << " | !Q: " << getString(gate[JK_FlipFlop::Q_INV]) << '\n';
@@ -80,7 +123,7 @@ int main()
 	}
 }
 
-int _main()
+int register_main()
 {
 	using namespace dat;
 
