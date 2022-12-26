@@ -93,12 +93,21 @@ namespace dat
 	class EdgeDetector
 	{
 	public:
+		void update(State clockOutput)
+		{
+			m_OldClock = clockOutput;
+		}
+
 		void detectPositive(State clockOutput, std::function<void(void)> function)
 		{
 			if (!m_OldClock && clockOutput)
-				function();
+				function();			
+		}
 
-			m_OldClock = clockOutput;
+		void detectNegative(State clockOutput, std::function<void(void)> function)
+		{
+			if (m_OldClock && !clockOutput)
+				function();
 		}
 
 	public:

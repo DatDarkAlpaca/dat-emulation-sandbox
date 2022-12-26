@@ -5,6 +5,9 @@
 #include "flip_flops/D_FlipFlop.h"
 #include "latches/SR_E_Latch.h"
 #include "register/Register.h"
+#include "components/BinaryCounter.h"
+#include <chrono>
+#include <thread>
 
 int getchNonBlock()
 {
@@ -30,42 +33,31 @@ int main()
 	using namespace dat;
 
 	AstableClock clock(200);
-	EdgeDetector edge;
-	MS_JK_FlipFlop gate;
-
-	gate[MS_JK_FlipFlop::J]     = OFF;
-	gate[MS_JK_FlipFlop::K]     = OFF;
-	gate[MS_JK_FlipFlop::CLOCK] = OFF;
-	gate.process();
+	EdgeDetector detector;
+	BinaryCounter counter;
 
 	while (true)
 	{
 		clock.push();
-		int a = getchNonBlock();
 
-		/* if (a) 
-			std::cout << a << '\n'; */
+		counter[BinaryCounter::CLOCK] = clock.output();
+		counter.process();
 
-		if (a == 49) // 1 - Clear
-		{
-			gate[MS_JK_FlipFlop::J] = ON;
-			gate[MS_JK_FlipFlop::K] = OFF;
-			std::cout << "J ON\n";
-		}
-
-		if (a == 48) // 0 - Clear
-		{
-			gate[MS_JK_FlipFlop::J] = OFF;
-			gate[MS_JK_FlipFlop::K] = ON;
-			std::cout << "J OFF\n";
-		}
-
-		gate[MS_JK_FlipFlop::CLOCK] = clock.output();
-
-		gate.process();
-		edge.detectPositive(clock.output(), [&]() {
-			std::cout << "Q: " << getString(gate[MS_JK_FlipFlop::Q]) << ' ' << " | !Q: " << getString(gate[MS_JK_FlipFlop::Q_INV]) << '\n';
+		detector.detectNegative(clock.output(), [&]() {
+			
 		});
+
+		detector.detectPositive(clock.output(), [&]() {
+			for (size_t i = 0; i < 8; ++i)
+			{
+				auto bit = counter[BinaryCounter::OUT[i]];
+				std::cout << (bit == ON) ? "1" : "0";
+			}
+			std::cout << '\n';
+		});
+
+		detector.update(clock.output());
+		std::this_thread::sleep_for(std::chrono::nanoseconds(10));
 	}
 }
 
